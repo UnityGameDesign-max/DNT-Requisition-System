@@ -1,4 +1,14 @@
 {
-    "users": []
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@ndt.com",
+      "role": "admin"
+    },
+    {
+      "id": 2,
+      "email": "requester@ndt.com",
+      "role": "requester"
+    }
+  ]
 }
-  
