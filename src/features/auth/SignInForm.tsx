@@ -1,23 +1,28 @@
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from "@/utils/validation-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import jwt from "jsonwebtoken";
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/state/userSlice";
+import { toast } from "sonner";
 
 
 type SignInForm = {
     email: string;
 }
 
-const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function SignInForm() {
+
+    const dispatch = useDispatch();
 
     const form = useForm<TAuthCredentialsValidator>({
         resolver: zodResolver(AuthCredentialsValidator),
@@ -34,31 +39,15 @@ export default function SignInForm() {
                 }
             })
 
-            console.log("res", res);
             if(res.data.length){
                 const user = res.data[0];
-
+                dispatch(setUser({ role: user.role, name: user.name }))
                 
             }else{
-                
+                toast.error("invalid user credentials")
             }
-            // if(res.data.length){
-            //     const user = res.data[0];
-
-            //     const token = jwt.sign(
-            //         {
-            //             id: user.id,
-            //             email: user.email,
-            //             role: user.role
-            //         },
-            //         SECRET_KEY,
-            //         { expiresIn: "1h" }
-            //     );
-
-            //     localStorage.setItem("access_token", token)
-            // }
         }catch(err){
-            console.log("dddd")
+            throw err;
         }
     }
 
@@ -92,6 +81,7 @@ export default function SignInForm() {
                                     { ...field }
                                 />
                             </FormControl>
+                            <FormMessage className="text-red-400"/>
                         </FormItem>
                     )}
                 />
