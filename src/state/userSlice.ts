@@ -20,7 +20,7 @@ const userSlice = createSlice({
         setUser: (state, action: PayloadAction<{ role: string, name: string }>) => {
             state.role = action.payload.role;
             state.isAuthenticated = true;
-            state.role = action.payload.name;
+            state.name = action.payload.name;
             localStorage.setItem("role", action.payload.role);
             localStorage.setItem("name", action.payload.name);
         },

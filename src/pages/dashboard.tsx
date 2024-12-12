@@ -6,11 +6,18 @@ import {
   SidebarInset,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import { getInitials } from "@/lib/utils";
+import { useSelector } from "react-redux";
 
 import { Outlet } from "react-router-dom";
 
 
 export function Dashboard() {
+
+;
+  const { name, role, isAuthenticated } = useSelector((state : any) => state.user);
+
+  console.log("name", name)
   return (
     <SidebarProvider
       style={
@@ -24,7 +31,7 @@ export function Dashboard() {
         <SidebarInset>
             <MaxWidthWrapper className="w-full">
                 <header className="p-2">
-                    <Header name="Tumelo" role="employee" initials="TM"/>
+                    <Header name={name} role={role} initials={getInitials(name)}/>
                 </header>
                 <div className="p-2 md:p-6 lg:p-8">
                     <Outlet />

@@ -1,6 +1,12 @@
-import CardDashboard from "@/components/common/card-dashboard";
+import CardDashboard, { CardContent } from "@/components/common/card-dashboard";
+import DashboardPageWrapper from "@/components/common/dashboardPageWrapper";
 import axios from "axios";
-import { BookOpenCheck, ClockArrowDown, UsersRound } from "lucide-react";
+import { 
+    BookOpenCheck, 
+    ClockArrowDown, 
+    UsersRound 
+} from "lucide-react";
+
 import { useEffect, useState } from "react";
 
 
@@ -61,17 +67,26 @@ export const DashboardHome = () => {
     },[])
 
     return (
-        <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
-            {cardData.map((d, i) => 
-                <CardDashboard 
-                    key={i}
-                    label={d.label}
-                    amount={d.amount}
-                    icon={d.icon}
-                    description=""
-                />
-            
-            )}
-        </section>
+        <DashboardPageWrapper className="flex flex-col gap-5">
+            <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
+                {cardData.map((d, i) => 
+                    <CardDashboard 
+                        key={i}
+                        label={d.label}
+                        amount={d.amount}
+                        icon={d.icon}
+                        description=""
+                    />
+                )}
+            </section>
+
+            <section className="grid grid-cols-1 gap-4 transition-all">
+                <CardContent>
+                    
+                </CardContent>
+            </section>
+
+        </DashboardPageWrapper>
+     
     );
 }

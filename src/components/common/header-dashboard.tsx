@@ -1,5 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { Avatar, AvatarFallback } from "../ui/avatar";
+import DashboardPageWrapper from "./dashboardPageWrapper";
 
 type ProfileDetails = {
     name: string;
@@ -19,19 +20,23 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
     const title = titles[location.pathname] || "New Dawn Requisition";
   
     return (
-      <header className="p-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">{title}</h1>
-        <div className="flex">
-            <Avatar className="bg-white">
-                <AvatarFallback 
-                    className="text-customTheme-primary font-bold"
-                >{initials}</AvatarFallback>
-            </Avatar>
-            <div className="ml-3">
-                <p className="text-lg font-semibold text-customTheme-primary">{name}</p>
-                <p className="text-sm text-customTheme-secondary">{role}</p>
+    <DashboardPageWrapper>
+        <header className="p-6 flex items-center justify-between">
+            <h1 className="text-2xl font-bold">{title}</h1>
+            <div className="flex">
+                <Avatar className="bg-white">
+                    <AvatarFallback 
+                        className="text-customTheme-primary font-bold"
+                    >{initials}</AvatarFallback>
+                </Avatar>
+                <div className="ml-3">
+                    <p className="text-lg font-semibold text-customTheme-primary">{name}</p>
+                    <p className="text-sm text-customTheme-secondary">{role}</p>
+                </div>
             </div>
-        </div>
       </header>
+
+    </DashboardPageWrapper>
+    
     );
   };
