@@ -7,7 +7,6 @@ import {
   SquareTerminal,
 } from "lucide-react"
 
-import { NavMain } from "@/components/common/nav-main";
 
 import {
   Sidebar,
@@ -15,6 +14,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { NavLink } from "react-router-dom";
 
 
 const data = {
@@ -22,18 +22,18 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: SquareTerminal,
       isActive: true
     },
     {
       title: "Models",
-      url: "#",
+      url: "/models",
       icon: Bot
     },
     {
       title: "Documentation",
-      url: "#",
+      url: "/documentation",
       icon: BookOpen
     },
   ]
@@ -50,7 +50,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <h1 className="font-bold">NEW DAWN <span className="text-customTheme-secondary">Requisition</span></h1>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+      <nav className="space-y-2">
+          {data.navMain.map(({ title, url, icon: Icon }) => (
+            <NavLink
+              key={url}
+              to={url}
+              className={({ isActive }) =>
+                `flex items-center space-x-3 px-4 py-2 rounded-md ${
+                  isActive ? "font-bold text-white" : "hover:text-customTheme-secondary"
+                }`
+              }
+            >
+              <Icon className="w-5 h-5" />
+              <span>{title}</span>
+            </NavLink>
+          ))}
+        </nav>
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

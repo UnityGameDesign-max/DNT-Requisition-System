@@ -1,9 +1,14 @@
 import { AppSidebar } from "@/components/common/app-sidebar"
+import { Header } from "@/components/common/header-dashboard"
+import MaxWidthWrapper from "@/components/common/max-width-wrapper"
 
 import {
   SidebarInset,
   SidebarProvider,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+
+import { Outlet } from "react-router-dom";
+
 
 export function Dashboard() {
   return (
@@ -17,16 +22,14 @@ export function Dashboard() {
       <div className="bg-customTheme-light flex min-h-screen w-full">
         <AppSidebar />
         <SidebarInset>
-            <div className="w-full ">
-                <header className="p-6">
-                    <h1 className="text-2xl font-bold">Dashboard</h1>
+            <MaxWidthWrapper className="w-full">
+                <header className="p-2">
+                    <Header name="Tumelo" role="employee" initials="TM"/>
                 </header>
-                <div className="p-6 md:p-8 lg:p-12">
-                
-                    <h1>content</h1>
+                <div className="p-2 md:p-6 lg:p-8">
+                    <Outlet />
                 </div>
-
-            </div>
+            </MaxWidthWrapper>
             
         </SidebarInset>
 

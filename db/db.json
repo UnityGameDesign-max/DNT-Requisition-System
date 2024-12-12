@@ -12,5 +12,15 @@
       "role": "requester",
       "name": "Tumelo Mahlangu"
     }
+  ],
+
+  "dashboardSummary": [
+    {
+      "approvedForms": "2",
+      "totalForms": "8",
+      "pendingForms": "15",
+      "users": "12"
+    }
   ]
+
 }

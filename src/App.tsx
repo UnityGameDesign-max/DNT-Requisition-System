@@ -4,6 +4,7 @@ import './App.css'
 import SignUp from './pages/signUp';
 import SignIn from './pages/signIn';
 import { Dashboard } from './pages/dashboard';
+import { DashboardHome } from './pages/dashboardPage';
 
 function App() {
 
@@ -13,12 +14,13 @@ function App() {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />}>
+          <Route index element={<DashboardHome />}></Route>
+        </Route>
         
       </Routes>
     </Router>
     <Toaster richColors position="top-center"/>
-    
     </>
     
   )
