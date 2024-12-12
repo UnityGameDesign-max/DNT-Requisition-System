@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/state/userSlice";
 import { toast } from "sonner";
@@ -23,6 +23,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export default function SignInForm() {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const form = useForm<TAuthCredentialsValidator>({
         resolver: zodResolver(AuthCredentialsValidator),
@@ -41,7 +42,8 @@ export default function SignInForm() {
 
             if(res.data.length){
                 const user = res.data[0];
-                dispatch(setUser({ role: user.role, name: user.name }))
+                dispatch(setUser({ role: user.role, name: user.name }));
+                navigate("/dashboard");
                 
             }else{
                 toast.error("invalid user credentials")
