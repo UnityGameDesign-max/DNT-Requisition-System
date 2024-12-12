@@ -4,7 +4,7 @@ import * as React from "react"
 import {
   BookOpen,
   Bot,
-  SquareTerminal,
+  LayoutDashboard,
 } from "lucide-react"
 
 
@@ -23,11 +23,11 @@ const data = {
     {
       title: "Dashboard",
       url: "/dashboard",
-      icon: SquareTerminal,
+      icon: LayoutDashboard,
       isActive: true
     },
     {
-      title: "Models",
+      title: "Requisition Form",
       url: "/models",
       icon: Bot
     },
@@ -57,7 +57,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               to={url}
               className={({ isActive }) =>
                 `flex items-center space-x-3 px-4 py-2 rounded-md ${
-                  isActive ? "font-bold text-white" : "hover:text-customTheme-secondary"
+                  isActive ? "font-bold text-customTheme-secondary" : "hover:text-customTheme-secondary"
                 }`
               }
             >

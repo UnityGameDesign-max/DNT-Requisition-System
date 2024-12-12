@@ -3,11 +3,14 @@ import DashboardPageWrapper from "@/components/common/dashboardPageWrapper";
 import axios from "axios";
 import { 
     BookOpenCheck, 
+    CircleX, 
     ClockArrowDown, 
+    NotepadText, 
     UsersRound 
 } from "lucide-react";
 
 import { useEffect, useState } from "react";
+import { TableDemo } from "./components/requisition";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -28,11 +31,6 @@ export const DashboardHome = () => {
             icon: UsersRound
         },
         {
-            label: "Total Forms",
-            amount: dashboardSummaryInfo.totalForms,
-            icon: UsersRound
-        },
-        {
             label: "Approved Forms",
             amount: dashboardSummaryInfo.approvedForms,
             icon: BookOpenCheck
@@ -41,7 +39,12 @@ export const DashboardHome = () => {
             label: "Pending Forms",
             amount: dashboardSummaryInfo.pendingForms,
             icon: ClockArrowDown
-        }
+        },
+        {
+            label: "Rejected Forms",
+            amount: dashboardSummaryInfo.totalForms,
+            icon: CircleX
+        },
 
     ]
 
@@ -82,7 +85,14 @@ export const DashboardHome = () => {
 
             <section className="grid grid-cols-1 gap-4 transition-all">
                 <CardContent>
-                    
+                    <div className="flex items-center gap-2">
+                        <div className="bg-customTheme-primary/10 flex h-10 w-10 items-center justify-center rounded-[50px]">
+                            <NotepadText className="h-5 w-5 text-customTheme-primary" />
+                        </div>
+                        
+                        <h1 className="font-medium">Recent requisitions forms</h1>
+                    </div>
+                    <TableDemo />
                 </CardContent>
             </section>
 

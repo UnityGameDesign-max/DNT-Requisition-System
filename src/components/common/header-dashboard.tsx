@@ -1,6 +1,19 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import DashboardPageWrapper from "./dashboardPageWrapper";
+
+import { 
+    DropdownMenu, 
+    DropdownMenuContent, 
+    DropdownMenuItem, 
+    DropdownMenuLabel, 
+    DropdownMenuSeparator, 
+    DropdownMenuTrigger 
+} from "../ui/dropdown-menu";
+
+import { LogOut } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "@/state/userSlice";
 
 type ProfileDetails = {
     name: string;
@@ -10,6 +23,8 @@ type ProfileDetails = {
 
 export const Header = ({ name, initials, role }: ProfileDetails) => {
     const location = useLocation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
   
     const titles: Record<string, string> = {
       "/dashboard": "Dashboard",
@@ -18,17 +33,46 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
     };
   
     const title = titles[location.pathname] || "New Dawn Requisition";
+
+    const signOut = () => {
+        dispatch(logoutUser());
+        navigate("/");
+    }
   
     return (
     <DashboardPageWrapper>
         <header className="p-6 flex items-center justify-between">
             <h1 className="text-2xl font-bold">{title}</h1>
             <div className="flex">
-                <Avatar className="bg-white">
-                    <AvatarFallback 
-                        className="text-customTheme-primary font-bold"
-                    >{initials}</AvatarFallback>
-                </Avatar>
+                <DropdownMenu>
+
+                    <DropdownMenuTrigger>
+                        <Avatar className="bg-white">
+                            <AvatarFallback 
+                                className="text-customTheme-primary font-bold"
+                            >{initials}</AvatarFallback>
+                        </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56 bg-white">
+                        <DropdownMenuLabel className="flex items-center gap-2">
+                        <Avatar className="bg-gray-100 text-customTheme-primary">
+                            <AvatarFallback>{initials}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                            <h2 className="text-base">{name}</h2>
+                            <p className="text-xs text-gray-500">{role}</p>
+                        </div>
+                    </DropdownMenuLabel>
+
+                    <DropdownMenuSeparator />
+
+                    <DropdownMenuItem onClick={signOut} className="cursor-pointer">
+                        <LogOut className="w-4 h-4 mr-2 hover:bg-gray-100 text-customTheme-primary" />
+                        Sign Out
+                    </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+              
                 <div className="ml-3">
                     <p className="text-lg font-semibold text-customTheme-primary">{name}</p>
                     <p className="text-sm text-customTheme-secondary">{role}</p>

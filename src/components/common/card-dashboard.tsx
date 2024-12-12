@@ -15,16 +15,14 @@ export default function CardDashboard(props: CardProps){
             <section className="flex justify-between gap-2">
                 <p className="text-sm">{props.label}</p>
 
-                <div className="flex h-10 w-10 items-center justify-center rounded-[50px] bg-customTheme-primary/10">
-                    <props.icon className="h-5 w-5 text-customTheme-primary" />
-                </div>
+                
             </section>
 
-            <section className="flex flex-col gap-1">
+            <section className="flex items-center justify-between gap-1">
                 <h2 className="text-2xl font-semibold">{props.amount}</h2>
 
-                <div className="flex items-center">
-                    <div className="flex items-center"></div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-[50px] bg-customTheme-primary/10">
+                    <props.icon className="h-5 w-5 text-customTheme-primary" />
                 </div>
             </section>
         </CardContent>
