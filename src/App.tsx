@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css'
 import SignUp from './pages/signUp';
 import SignIn from './pages/signIn';
-import { Dashboard } from './pages/components/dashboardContainer';
+import { DashboardContainer } from './pages/components/dashboardContainer';
 import { DashboardHome } from './pages/dashboardPage';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<SignIn />} />
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/dashboard" element={<DashboardContainer />}>
           <Route index element={<DashboardHome />}></Route>
         </Route>
         
