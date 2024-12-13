@@ -16,11 +16,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { EmployeeRequisitionValidator, ExpenseRequestRequisitionValidator, SalaryAdjustmentRequisitionValidator, TEmployeeRequisitionValidator, TExpenseRequestRequisitionValidator, TSalaryAdjustmentRequisitionValidator } from "@/utils/validation-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export function RequisitionCreation(){
+
+    const navigate = useNavigate();
+    const name = localStorage.getItem("name");
 
     const employeeRequisitionForm = useForm<TEmployeeRequisitionValidator>({
         resolver: zodResolver(EmployeeRequisitionValidator),
@@ -52,20 +59,66 @@ export function RequisitionCreation(){
             serviceRequested: '',
             estimatedCost: 0,
             budgetAvailability: true,
-            reasonRequest: ''
+            reasonRequest: '',
+            division: ''
         }
     })
 
     const employeeRequisitionSubmit = async (employeeRequisitionData: TEmployeeRequisitionValidator) => {
-        console.log("employeeRequisitionData", employeeRequisitionData)
+        
+        const formType = "Employee Requisition";
+
+        (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[] }).approvers = [];
+        (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date }).date = new Date();
+        (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null}).requesterName = name;
+        (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string}).formType = formType
+
+        try{
+            const res = await axios.post(`${API_BASE_URL}/allRequisitionForms`, employeeRequisitionData);
+        
+            if(res.data){
+                navigate("/dashboard");
+            }
+        }catch(err){
+            throw err;
+        }
     }; 
 
     const salaryAdjustmentRequisitionSubmit = async (salaryAjustmentData: TSalaryAdjustmentRequisitionValidator) => {
-        console.log("salaryAdjustment", salaryAjustmentData)
+
+        const formType = "Salary Adjustment Requisition";
+
+        (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[] }).approvers = [];
+        (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[]; date: Date }).date = new Date();
+        (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null }).requesterName = name;
+        (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string}).formType = formType;
+
+        try{
+            const res = await axios.post(`${API_BASE_URL}/allRequisitionForms`, salaryAjustmentData);
+            if(res.data){
+                navigate("/dashboard")
+            }
+        }catch(err){
+            throw err;
+        }
     }
 
     const expenseRequestRequisitionSubmit = async (expenseRequestData: TExpenseRequestRequisitionValidator) => {
-        console.log("expenseRequest", expenseRequestData)
+
+        const formType = "Expense Request Requisition";
+        (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[] }).approvers = [];
+        (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[]; date: Date }).date = new Date();
+        (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null}).requesterName = name;
+        (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string}).formType = formType;
+
+        try{
+            const res = await axios.post(`${API_BASE_URL}/allRequisitionForms`, expenseRequestData);
+            if(res.data){
+                navigate("/dashboard");
+            }
+        }catch(err){
+            throw err;
+        }
     }
 
     const employmentType = ["Permanent", "Temporary"];
@@ -491,29 +544,55 @@ export function RequisitionCreation(){
                                             </div>
                                     </div>
 
+                                    <div className="grid grid-cols-2 gap-6 mb-3">
+                                        <div className="space-y-2 flex flex-col ">
+
+                                            <Label htmlFor="budgetAvailibility">Budget Availibility</Label>
+                                            <FormField 
+                                                control={expenseRequestRequisitionForm.control}
+                                                name="budgetAvailability"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormControl>
+                                                            <Checkbox
+                                                                checked={field.value ?? false}
+                                                                onCheckedChange={field.onChange}
+                                                                id="budgetAvailability"
+                                                                className="mt-2"
+                                                                {...(field && { onBlur: field.onBlur })} 
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage className="text-red-400"/>
+                                                    </FormItem>
+                                                )}
+                                            />
+                                           
+                                        </div>
+
+                                        <div className="space-y-2  ">
+                                            <Label htmlFor="division">Division</Label>
+
+                                            <FormField 
+                                                control={expenseRequestRequisitionForm.control}
+                                                name="division"
+                                                render={({ field }) => (
+                                                    <FormItem>
+                                                        <FormControl>
+                                                            <Input
+                                                                id="division"
+                                                                className="w-full"
+                                                                { ...field }
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage className="text-red-400"/>
+                                                    </FormItem>
+                                                )}
+                                            />
+                                        </div>
+                                    </div>
+
                                     <div className="grid grid-cols-1 gap-6 mb-3">
-                                            <div className="space-y-2 flex gap-4">
-                                                
-                                                <FormField 
-                                                    control={expenseRequestRequisitionForm.control}
-                                                    name="budgetAvailability"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormControl>
-                                                                <Checkbox
-                                                                    checked={field.value ?? false}
-                                                                    onCheckedChange={field.onChange}
-                                                                    id="budgetAvailability"
-                                                                    className="mt-2"
-                                                                    {...(field && { onBlur: field.onBlur })} 
-                                                                />
-                                                            </FormControl>
-                                                            <FormMessage className="text-red-400"/>
-                                                        </FormItem>
-                                                    )}
-                                                />
-                                                <Label htmlFor="budgetAvailibility">Budget Availibility</Label>
-                                            </div>
+                                         
 
                                             <div className="space-y-2">
                                                 <Label htmlFor="reasonRequest">Reason for Request</Label>

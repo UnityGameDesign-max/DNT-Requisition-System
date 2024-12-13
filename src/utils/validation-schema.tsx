@@ -34,7 +34,8 @@ export const ExpenseRequestRequisitionValidator = z.object({
   serviceRequested: z.string().nonempty("Service requested is required."),
   estimatedCost: z.number({ required_error: 'Estimated cost is required' }),
   budgetAvailability: z.boolean().default(false).optional(),
-  reasonRequest: z.string().nonempty("Reason for Reqest is required.")
+  reasonRequest: z.string().nonempty("Reason for Reqest is required."),
+  division: z.string().nonempty("Division is required.")
 })
 
 export type TExpenseRequestRequisitionValidator = z.infer<typeof ExpenseRequestRequisitionValidator>
