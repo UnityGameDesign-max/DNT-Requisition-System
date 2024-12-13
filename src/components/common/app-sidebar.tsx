@@ -1,10 +1,8 @@
-"use client"
-
 import * as React from "react"
 import {
-  BookOpen,
-  Bot,
+  Bell,
   LayoutDashboard,
+  SquarePen,
 } from "lucide-react"
 
 
@@ -17,29 +15,37 @@ import {
 import { NavLink } from "react-router-dom";
 
 
-const data = {
 
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-      isActive: true
-    },
-    {
-      title: "Requisition Form",
-      url: "/models",
-      icon: Bot
-    },
-    {
-      title: "Documentation",
-      url: "/documentation",
-      icon: BookOpen
-    },
-  ]
-}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+
+  const role = localStorage.getItem('role');
+
+  const data = {
+
+    navMain: [
+      {
+        title: "Dashboard",
+        url: "/dashboard",
+        icon: LayoutDashboard,
+        role: ["admin", "employee", "Human Resources", "Finance Manager"]
+      },
+      {
+        title: "Requisition creation",
+        url: "/dashboard/requisition-creation",
+        icon: SquarePen,
+        role: ["employee"]
+      },
+      {
+        title: "Approvals",
+        url: "/dashboard/approvals",
+        icon: Bell,
+        role: ["employee"]
+      },
+    ]
+  }
+
+  const filteredNavMain = data.navMain.filter(item => item.role.includes(role || ""));
   return (
     <Sidebar className="bg-customTheme-primary text-white rounded-tr-3xl rounded-br-3xl" collapsible="icon" {...props}>
       <SidebarHeader className="flex items-center justify-center mb-5">
@@ -51,10 +57,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
       <nav className="space-y-2">
-          {data.navMain.map(({ title, url, icon: Icon }) => (
+          {filteredNavMain.map(({ title, url, icon: Icon }) => (
             <NavLink
               key={url}
               to={url}
+              end={url === "/dashboard"}
               className={({ isActive }) =>
                 `flex items-center space-x-3 px-4 py-2 rounded-md ${
                   isActive ? "font-bold text-customTheme-secondary" : "hover:text-customTheme-secondary"

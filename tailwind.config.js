@@ -80,7 +80,8 @@ export default {
         customTheme: {
           primary: '#006956',
           secondary: '#D6AB50',
-		  light: "#f2e9ce"
+		  light: "#f2e9ce",
+		  muted: '#6b7280',
         }
       }
     }

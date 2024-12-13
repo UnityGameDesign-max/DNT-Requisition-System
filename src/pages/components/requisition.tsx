@@ -10,6 +10,9 @@ import {
 } from "@/components/ui/table";
 
 import axios from "axios";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { getInitials } from "@/lib/utils";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -45,10 +48,23 @@ import axios from "axios";
         </TableHeader>
         <TableBody>
           {requisitionSummary.map((requisition: any) => (
-            <TableRow key={requisition.formID}>
+            <TableRow className="text-customTheme-muted" key={requisition.formID}>
               <TableCell><p>{requisition.formID}</p></TableCell>
               <TableCell><p>{requisition.formType}</p></TableCell>
-              <TableCell><p>{requisition.requesterName}</p></TableCell>
+              <TableCell>
+                <HoverCard>
+                    <HoverCardTrigger asChild>
+                        <Avatar className="bg-gray-100 cursor-pointer">
+                            <AvatarFallback>{getInitials(requisition.requesterName)}</AvatarFallback>
+                        </Avatar>
+                    </HoverCardTrigger>
+                    <HoverCardContent className="bg-white w-30">
+                        {requisition.requesterName}
+                    </HoverCardContent>
+                </HoverCard>
+               
+            
+              </TableCell>
               <TableCell><p>{requisition.division}</p></TableCell>
               <TableCell>
                 {requisition.status === "Approved" ? 

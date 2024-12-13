@@ -28,11 +28,16 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
   
     const titles: Record<string, string> = {
       "/dashboard": "Dashboard",
-      "/signup": "Sign Up",
-      "/signin": "Sign In",
+      "/dashboard/requisition-creation": "Requisition Form"
     };
+
+    const descriptions: Record<string, string> = {
+        "/dashboard": "Overall summary of requisition forms",
+        "/dashboard/requisition-creation": "Section for creating and managing requisition forms."
+    }
   
     const title = titles[location.pathname] || "New Dawn Requisition";
+    const description = descriptions[location.pathname]
 
     const signOut = () => {
         dispatch(logoutUser());
@@ -42,10 +47,13 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
     return (
     <DashboardPageWrapper>
         <header className="p-6 flex items-center justify-between">
-            <h1 className="text-2xl font-bold">{title}</h1>
+            <div>
+                <h1 className="text-2xl font-bold">{title}</h1>
+                <p className="text-customTheme-muted text-sm">{description}</p>
+            </div>
+           
             <div className="flex">
                 <DropdownMenu>
-
                     <DropdownMenuTrigger>
                         <Avatar className="bg-white">
                             <AvatarFallback 

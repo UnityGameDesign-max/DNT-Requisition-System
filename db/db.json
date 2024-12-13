@@ -47,6 +47,39 @@
       "pendingForms": "15",
       "users": "12"
     }
+  ],
+
+  "employeeRequisition": [
+    {
+      "id": 1,
+      "formID": "Tejas networks",
+      "formType": "Employee Requisition",
+      "requesterID": 2,
+      "division": "HR Department",
+      "resourcesRequired": "Laptop, Office Space",
+      "employmentType": "Permanent",
+      "proposedStartDate": "2025-01-15",
+      "proposedEndDate": "2025-12-31",
+      "motivation": "To handle increased workload in the HR department",
+      "approvers": [
+        {
+          "approverID": 3,
+          "role": "Human Resources",
+          "status": "Pending"
+        },
+        {
+          "approverID": 4,
+          "role": "Finance Manager",
+          "status": "Pending"
+        },
+        {
+          "approverID": 5,
+          "role": "Admin",
+          "status": "Pending"
+        }
+      ],
+      "createdAt": "2024-12-10T10:00:00Z"
+    }
   ]
 
 }
