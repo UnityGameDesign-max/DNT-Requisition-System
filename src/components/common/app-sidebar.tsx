@@ -1,6 +1,7 @@
 import * as React from "react"
 import {
   Bell,
+  ClipboardPlus,
   LayoutDashboard,
   SquarePen,
 } from "lucide-react"
@@ -35,6 +36,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/dashboard/requisition-creation",
         icon: SquarePen,
         role: ["employee"]
+      },
+      {
+        title: "Add approval",
+        url: "/dashboard/add-approval",
+        icon: ClipboardPlus,
+        role: ["admin", "Human Resources", "Finance Manager"]
       },
       {
         title: "Approvals",
