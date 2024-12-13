@@ -27,9 +27,17 @@ export const SalaryAdjustmentRequisitionValidator = z.object({
   executiveManager: z.string().optional(),
   currentSalary: z.number({ required_error: 'Current Salary is required' }),
   recommendedSalary: z.number({ required_error: "Recommended salary is required" })
+});
+
+
+export const ExpenseRequestRequisitionValidator = z.object({
+  serviceRequested: z.string().nonempty("Service requested is required."),
+  estimatedCost: z.number({ required_error: 'Estimated cost is required' }),
+  budgetAvailability: z.boolean().default(false).optional(),
+  reasonRequest: z.string().nonempty("Reason for Reqest is required.")
 })
 
-
+export type TExpenseRequestRequisitionValidator = z.infer<typeof ExpenseRequestRequisitionValidator>
 export type TSalaryAdjustmentRequisitionValidator = z.infer<typeof SalaryAdjustmentRequisitionValidator>
 export type TEmployeeRequisitionValidator = z.infer<typeof EmployeeRequisitionValidator>
 export type TAuthCredentialsValidator = z.infer<typeof AuthCredentialsValidator>

@@ -1,8 +1,10 @@
 import { CardContent } from "@/components/common/card-dashboard";
 import DashboardPageWrapper from "@/components/common/dashboardPageWrapper";
+import { FormPageTitle } from "@/components/common/form-title";
 import MaxWidthWrapper from "@/components/common/max-width-wrapper";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
 import SalaryInput from "@/components/ui/currency-input";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -12,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs-inline";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { EmployeeRequisitionValidator, SalaryAdjustmentRequisitionValidator, TEmployeeRequisitionValidator, TSalaryAdjustmentRequisitionValidator } from "@/utils/validation-schema";
+import { EmployeeRequisitionValidator, ExpenseRequestRequisitionValidator, SalaryAdjustmentRequisitionValidator, TEmployeeRequisitionValidator, TExpenseRequestRequisitionValidator, TSalaryAdjustmentRequisitionValidator } from "@/utils/validation-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -41,6 +43,17 @@ export function RequisitionCreation(){
             currentSalary: 0,
             recommendedSalary: 0
         }
+    });
+
+
+    const expenseRequestRequisitionForm = useForm<TExpenseRequestRequisitionValidator>({
+        resolver: zodResolver(ExpenseRequestRequisitionValidator),
+        defaultValues: {
+            serviceRequested: '',
+            estimatedCost: 0,
+            budgetAvailability: true,
+            reasonRequest: ''
+        }
     })
 
     const employeeRequisitionSubmit = async (employeeRequisitionData: TEmployeeRequisitionValidator) => {
@@ -49,6 +62,10 @@ export function RequisitionCreation(){
 
     const salaryAdjustmentRequisitionSubmit = async (salaryAjustmentData: TSalaryAdjustmentRequisitionValidator) => {
         console.log("salaryAdjustment", salaryAjustmentData)
+    }
+
+    const expenseRequestRequisitionSubmit = async (expenseRequestData: TExpenseRequestRequisitionValidator) => {
+        console.log("expenseRequest", expenseRequestData)
     }
 
     const employmentType = ["Permanent", "Temporary"];
@@ -64,10 +81,11 @@ export function RequisitionCreation(){
                     <TabsTrigger value="expense">Expense Request</TabsTrigger>
                 </TabsList>
                 <TabsContent value="employee">
-                    <div className="pt-10 pb-10">
-                        <h1 className="text-2xl font-semibold">Employee Requisition</h1>
-                        <p className="text-sm text-customTheme-muted mt-2">Submit and manage requests for employee-related resources</p>
-                    </div>
+
+                    <FormPageTitle 
+                        title="Employee Requisition"
+                        description="Submit and manage requests for employee-related resources"
+                    />
 
                     <CardContent>
                         <Form {...employeeRequisitionForm}>
@@ -295,10 +313,10 @@ export function RequisitionCreation(){
 
                 <TabsContent value="salary">
 
-                    <div className="pt-10 pb-10">
-                        <h1 className="text-2xl font-semibold">Salary Adjustment Requisition</h1>
-                        <p className="text-sm text-customTheme-muted mt-2">Request and track salary adjustments with detailed justifications for review and approval.</p>
-                    </div>
+                    <FormPageTitle 
+                        title="Salary Adjustment Requisition"
+                        description="Request and track salary adjustments with detailed justifications for review and approval."
+                    />
 
 
                     <CardContent>
@@ -406,12 +424,12 @@ export function RequisitionCreation(){
 
                                     <div className="grid grid-cols-2 gap-6 mb-3">
                                             <div className="space-y-2">
-                                                    <SalaryInput
-                                                        form={salaryAdjustmentRequisitionForm}
-                                                        className="w-full"
-                                                        label="Current Salary"
-                                                        name="currentSalary"
-                                                    />
+                                                <SalaryInput
+                                                    form={salaryAdjustmentRequisitionForm}
+                                                    className="w-full"
+                                                    label="Current Salary"
+                                                    name="currentSalary"
+                                                />
                                             </div>
 
                                             <div className="space-y-2 mb-3">
@@ -420,6 +438,96 @@ export function RequisitionCreation(){
                                                     className="w-full"
                                                     label="Recommended Salary"
                                                     name="recommendedSalary"
+                                                />
+                                            </div>
+                                    </div>
+
+                                    <Button type="submit">Save</Button>
+                                </form>
+                            </MaxWidthWrapper>
+                        </Form>
+                    </CardContent>
+                </TabsContent>
+
+                <TabsContent value="expense">
+
+                    <FormPageTitle 
+                        title="Expense Request"
+                        description="Provide the required information for your expense request submission."
+                    />
+
+                    <CardContent>
+                        <Form {...expenseRequestRequisitionForm}>
+                            <MaxWidthWrapper className="px-20">
+                                <form onSubmit={expenseRequestRequisitionForm.handleSubmit(expenseRequestRequisitionSubmit)}>
+                                    <div className="grid grid-cols-2 gap-6 mb-3">
+                                            <div className="space-y-2">
+                                                <Label htmlFor="serviceRequested">Service Requested</Label>
+                                                <FormField 
+                                                    control={expenseRequestRequisitionForm.control}
+                                                    name="serviceRequested"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormControl>
+                                                                <Input
+                                                                    id="serviceRequested"
+                                                                    className="w-full"
+                                                                    { ...field }
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage className="text-red-400"/>
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <SalaryInput
+                                                    form={salaryAdjustmentRequisitionForm}
+                                                    className="w-full"
+                                                    label="Estimated Cost"
+                                                    name="estimatedCost"
+                                                />
+                                            </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 gap-6 mb-3">
+                                            <div className="space-y-2 flex gap-4">
+                                                
+                                                <FormField 
+                                                    control={expenseRequestRequisitionForm.control}
+                                                    name="budgetAvailability"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormControl>
+                                                                <Checkbox
+                                                                    checked={field.value ?? false}
+                                                                    onCheckedChange={field.onChange}
+                                                                    id="budgetAvailability"
+                                                                    className="mt-2"
+                                                                    {...(field && { onBlur: field.onBlur })} 
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage className="text-red-400"/>
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <Label htmlFor="budgetAvailibility">Budget Availibility</Label>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="reasonRequest">Reason for Request</Label>
+                                                <FormField 
+                                                    control={expenseRequestRequisitionForm.control}
+                                                    name="reasonRequest"
+                                                    render={({ field }) => (
+                                                        <FormItem>
+                                                            <FormControl>
+                                                                <Textarea { ...field } id="reasonRequest"/>
+                                                            </FormControl>
+                                                            <FormMessage className="text-red-400"/>
+                                                        </FormItem>
+                                                    )}
                                                 />
                                             </div>
                                     </div>
