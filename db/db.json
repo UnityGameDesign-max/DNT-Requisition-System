@@ -65,17 +65,17 @@
         {
           "approverID": 3,
           "role": "Human Resources",
-          "status": "Pending"
+          "status": "Approved"
         },
         {
           "approverID": 4,
           "role": "Finance Manager",
-          "status": "Pending"
+          "status": "Approved"
         },
         {
           "approverID": 5,
           "role": "Admin",
-          "status": "Pending"
+          "status": "Rejected"
         }
       ],
       "createdAt": "2024-12-10T10:00:00Z"

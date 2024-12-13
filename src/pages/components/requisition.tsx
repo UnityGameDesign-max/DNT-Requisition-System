@@ -40,7 +40,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
           <TableRow className="font-bold">
             <TableHead >Form ID</TableHead>
             <TableHead>Form Type</TableHead>
-            <TableHead>Requister name</TableHead>
+            <TableHead>Requester name</TableHead>
             <TableHead>Division</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Created at</TableHead>
