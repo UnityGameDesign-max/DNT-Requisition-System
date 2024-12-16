@@ -42,11 +42,35 @@
       "proposedEndDate": "2024-12-11T22:00:00.000Z",
       "motivation": "The motivation",
       "approvers": [
-       
+        {
+          "name": "Mpho Lingalo",
+          "role": "Human Resources"
+        },
+        {
+          "name": "Elij Mahlangu",
+          "role": "Admin"
+        },
+        {
+          "name": "Elij Mahlangu",
+          "role": "Admin"
+        },
+        {
+          "name": "Elij Mahlangu",
+          "role": "Admin"
+        },
+        {
+          "name": "Elij Mahlangu",
+          "role": "Admin"
+        },
+        {
+          "name": "Pinky Dlamini",
+          "role": "Finance Manager"
+        }
       ],
       "date": "2024-12-13T16:32:37.457Z",
       "requesterName": "Tumelo Mahlangu",
-      "formType": "Employee Requisition"
+      "formType": "Employee Requisition",
+      "status": "Pending"
     },
     {
       "id": "98d0",
@@ -56,10 +80,22 @@
       "executiveManager": "",
       "currentSalary": 2343.33,
       "recommendedSalary": 222.22,
-      "approvers": [],
+      "approvers": [
+        {
+          "name": "Pinky Dlamini",
+          "role": "Finance Manager"
+        }
+      ],
       "date": "2024-12-13T16:41:28.139Z",
       "requesterName": "Tumelo Mahlangu",
-      "formType": "Salary Adjustment Requisition"
+      "formType": "Salary Adjustment Requisition",
+      "status": "Pending",
+      "rejectionComment": "added rejection",
+      "rejectBy": {
+        "name": "Pinky Dlamini",
+        "role": "Finance Manager",
+        "comment": "added rejection"
+      }
     },
     {
       "id": "8ffb",
@@ -69,10 +105,16 @@
       "executiveManager": "",
       "currentSalary": 3444.43,
       "recommendedSalary": 60000,
-      "approvers": [],
+      "approvers": [
+        {
+          "name": "Elij Mahlangu",
+          "role": "Admin"
+        }
+      ],
       "date": "2024-12-13T16:45:45.122Z",
       "requesterName": "Tumelo Mahlangu",
-      "formType": "Salary Adjustment Requisition"
+      "formType": "Salary Adjustment Requisition",
+      "status": "Approved"
     },
     {
       "id": "ccf9",
@@ -81,10 +123,22 @@
       "budgetAvailability": true,
       "reasonRequest": "IT ",
       "division": "IT department",
-      "approvers": [],
+      "approvers": [
+        {
+          "name": "Mpho Lingalo",
+          "role": "Human Resources"
+        }
+      ],
       "date": "2024-12-13T16:59:38.639Z",
       "requesterName": "Tumelo Mahlangu",
-      "formType": "Expense Request Requisition"
+      "formType": "Expense Request Requisition",
+      "status": "Rejected",
+      "rejectionComment": "Not approved",
+      "rejectBy": {
+        "name": "Pinky Dlamini",
+        "role": "Finance Manager",
+        "comment": "Not approved"
+      }
     },
     {
       "id": "c4b4",
@@ -95,10 +149,16 @@
       "proposedStartDate": "2024-12-11T22:00:00.000Z",
       "proposedEndDate": "2024-12-11T22:00:00.000Z",
       "motivation": "sasa",
-      "approvers": [],
+      "approvers": [
+        {
+          "name": "Pinky Dlamini",
+          "role": "Finance Manager"
+        }
+      ],
       "date": "2024-12-13T17:03:52.296Z",
       "requesterName": "Issac Masemola",
-      "formType": "Employee Requisition"
+      "formType": "Employee Requisition",
+      "status": "Pending"
     },
     {
       "id": "dd30",
@@ -112,7 +172,14 @@
       "approvers": [],
       "date": "2024-12-16T12:18:54.649Z",
       "requesterName": "Tumelo Mahlangu",
-      "formType": "Employee Requisition"
+      "formType": "Employee Requisition",
+      "status": "Rejected",
+      "rejectionComment": "tgfhgfgh",
+      "rejectBy": {
+        "name": "Pinky Dlamini",
+        "role": "Finance Manager",
+        "comment": "tgfhgfgh"
+      }
     }
   ],
   "dashboardSummary": [
@@ -123,81 +190,6 @@
       "users": "12",
       "id": "c6fa"
     }
-  ],
-  "salaryAdjustmentRequisition": [
-    {
-      "id": "52fe",
-      "division": "HR department",
-      "executiveHead": "",
-      "salaryAdjustmentReason": "Performance",
-      "executiveManager": "",
-      "currentSalary": 456.79,
-      "recommendedSalary": 0,
-      "approvers": [],
-      "date": "2024-12-13T14:49:50.523Z"
-    }
-  ],
-  "expenseRequestRequisition": [
-    {
-      "id": "0f80",
-      "serviceRequested": "Expense Requested",
-      "estimatedCost": 0,
-      "budgetAvailability": true,
-      "reasonRequest": "The reason request",
-      "approvers": []
-    },
-    {
-      "id": "780a",
-      "serviceRequested": "Expense Requested",
-      "estimatedCost": 0,
-      "budgetAvailability": true,
-      "reasonRequest": "The reason request",
-      "approvers": []
-    },
-    {
-      "id": "da2a",
-      "serviceRequested": "Expense Requested",
-      "estimatedCost": 0,
-      "budgetAvailability": true,
-      "reasonRequest": "The reason request",
-      "approvers": []
-    },
-    {
-      "id": "6cda",
-      "serviceRequested": "Expense Requested",
-      "estimatedCost": 0,
-      "budgetAvailability": true,
-      "reasonRequest": "The reason request",
-      "approvers": []
-    },
-    {
-      "id": "66e2",
-      "serviceRequested": "Expense Requested",
-      "estimatedCost": 0,
-      "budgetAvailability": true,
-      "reasonRequest": "The reason request",
-      "approvers": []
-    },
-    {
-      "id": "0727",
-      "serviceRequested": "Expense Requested",
-      "estimatedCost": 0,
-      "budgetAvailability": true,
-      "reasonRequest": "The reason request",
-      "approvers": []
-    }
-  ],
-  "employeeRequisition": [
-    {
-      "id": "560f",
-      "division": "HR department",
-      "resourcesRequired": "Brand new Laptop",
-      "employmentType": "Temporary",
-      "executiveHead": "",
-      "proposedStartDate": "2024-12-04T22:00:00.000Z",
-      "proposedEndDate": "2024-12-02T22:00:00.000Z",
-      "motivation": "Theee",
-      "approvers": []
-    }
   ]
+ 
 }

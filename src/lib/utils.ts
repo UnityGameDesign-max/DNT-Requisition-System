@@ -36,8 +36,8 @@ export const approvalDetails = (requisition: any) => [
   { key: 'Proposed End Date:', value: requisition.proposedEndDate ? formatDate(requisition.proposedEndDate) : '' },
   { key: 'Reason Request:', value: requisition.reasonRequest },
   { key: 'Salary Adjustment Reason:', value: requisition.salaryAdjustmentReason },
-  { key: 'Current Salary:', value: requisition.currentSalary },
-  { key: 'Recommended Salary:', value: requisition.recommendedSalary },
+  { key: 'Current Salary:', value: requisition.currentSalary ? `R ${requisition.currentSalary}` : '' },
+  { key: 'Recommended Salary:', value: requisition.recommendedSalary ? `R ${requisition.recommendedSalary}` : '' },
   { key: 'Budget Availability:', value: requisition.budgetAvailability },
   { key: 'Motivation:', value: requisition.motivation },
 ];

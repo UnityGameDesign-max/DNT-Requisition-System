@@ -17,7 +17,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   
-  export function TableDemo() {
+  export function RequisitionSummary() {
 
     const [requisitionSummary, setRequistionSummary] = useState([])
 
@@ -70,7 +70,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
                 {requisition.status === "Approved" ? 
                 <div className="bg-green-500/10 p-1 rounded-full w-[90px]">
                     <p className="text-green-500 ml-1.5 font-medium">{ requisition.status }</p>
-                </div> : requisition.status === "Pending" || requisition.approvers.length === 0 
+                </div> : requisition.status === "Pending" 
                 ? <div className="bg-yellow-500/10 p-1 rounded-full w-[70px]">
                     <p className="text-yellow-500 font-medium ml-1">{requisition.status || "Pending"}</p>
                   </div> : requisition.status === "Rejected" ? <div className="bg-red-500/10 p-1 rounded-full w-[75px]">

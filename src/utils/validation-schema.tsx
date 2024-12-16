@@ -8,6 +8,10 @@ export const AuthCredentialsValidator = z.object({
     .min(1, 'Email is required'),
 });
 
+export const RejectionRequisitionValidator = z.object({
+  comment: z.string().nonempty("Rejection comment is required.")
+})
+
 
 export const EmployeeRequisitionValidator = z.object({
   division: z.string().nonempty("Division is required"),
@@ -38,6 +42,7 @@ export const ExpenseRequestRequisitionValidator = z.object({
   division: z.string().nonempty("Division is required.")
 })
 
+export type TRejectionRequisitionValidator = z.infer<typeof RejectionRequisitionValidator>
 export type TExpenseRequestRequisitionValidator = z.infer<typeof ExpenseRequestRequisitionValidator>
 export type TSalaryAdjustmentRequisitionValidator = z.infer<typeof SalaryAdjustmentRequisitionValidator>
 export type TEmployeeRequisitionValidator = z.infer<typeof EmployeeRequisitionValidator>

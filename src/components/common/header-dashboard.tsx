@@ -14,6 +14,7 @@ import {
 import { LogOut } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "@/state/userSlice";
+import { Separator } from "../ui/separator";
 
 type ProfileDetails = {
     name: string;
@@ -74,7 +75,7 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
                         </div>
                     </DropdownMenuLabel>
 
-                    <DropdownMenuSeparator />
+                    <Separator className="text-customTheme-muted my-2"/>
 
                     <DropdownMenuItem onClick={signOut} className="cursor-pointer">
                         <LogOut className="w-4 h-4 mr-2 hover:bg-gray-100 text-customTheme-primary" />

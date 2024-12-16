@@ -1,11 +1,4 @@
-import * as React from "react"
-import {
-  Bell,
-  ClipboardPlus,
-  LayoutDashboard,
-  SquarePen,
-} from "lucide-react"
-
+import * as React from "react";
 
 import {
   Sidebar,
@@ -14,43 +7,16 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { data } from "@/utils/constanst";
 
 
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
-  const role = localStorage.getItem('role');
+  const { role } = useSelector((state : any) => state.user)
 
-  const data = {
-
-    navMain: [
-      {
-        title: "Dashboard",
-        url: "/dashboard",
-        icon: LayoutDashboard,
-        role: ["admin", "employee", "Human Resources", "Finance Manager"]
-      },
-      {
-        title: "Requisition creation",
-        url: "/dashboard/requisition-creation",
-        icon: SquarePen,
-        role: ["employee"]
-      },
-      {
-        title: "Add approval",
-        url: "/dashboard/add-approval",
-        icon: ClipboardPlus,
-        role: ["admin", "Human Resources", "Finance Manager"]
-      },
-      {
-        title: "Approvals",
-        url: "/dashboard/approvals",
-        icon: Bell,
-        role: ["employee"]
-      },
-    ]
-  }
 
   const filteredNavMain = data.navMain.filter(item => item.role.includes(role || ""));
   return (

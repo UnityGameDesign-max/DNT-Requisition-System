@@ -57,17 +57,6 @@ export default function SignInForm() {
         <Card className="w-[450px] p-7">
         <CardHeader>
             <CardTitle className="font-bold text-3xl">Sign in to your account</CardTitle>
-            <Link
-              className={buttonVariants({ 
-                variant: "link",
-                size: 'lg',
-                className: 'text-customTheme-primary gap-1.5',
-            })}
-              to="/signup"
-            >
-                Don't have any account?
-                <ArrowRight className="h-4 w-4"/>
-            </Link>
         </CardHeader>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>

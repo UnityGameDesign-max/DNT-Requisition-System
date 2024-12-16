@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import { useEffect, useState } from "react";
-import { TableDemo } from "./components/requisition";
+import { RequisitionSummary } from "./components/requisition";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -92,7 +92,7 @@ export const DashboardHome = () => {
                         
                         <h1 className="font-medium">Recent requisitions forms</h1>
                     </div>
-                    <TableDemo />
+                    <RequisitionSummary />
                 </CardContent>
             </section>
 
