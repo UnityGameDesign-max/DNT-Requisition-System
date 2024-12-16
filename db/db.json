@@ -41,7 +41,9 @@
       "proposedStartDate": "2024-12-01T22:00:00.000Z",
       "proposedEndDate": "2024-12-11T22:00:00.000Z",
       "motivation": "The motivation",
-      "approvers": [],
+      "approvers": [
+       
+      ],
       "date": "2024-12-13T16:32:37.457Z",
       "requesterName": "Tumelo Mahlangu",
       "formType": "Employee Requisition"
@@ -96,6 +98,20 @@
       "approvers": [],
       "date": "2024-12-13T17:03:52.296Z",
       "requesterName": "Issac Masemola",
+      "formType": "Employee Requisition"
+    },
+    {
+      "id": "dd30",
+      "division": "IT department",
+      "resourcesRequired": "Brand new Laptop",
+      "employmentType": "Permanent",
+      "executiveHead": "dddd",
+      "proposedStartDate": "2024-12-02T22:00:00.000Z",
+      "proposedEndDate": "2024-12-13T22:00:00.000Z",
+      "motivation": "The motivation to get a brand new laptop",
+      "approvers": [],
+      "date": "2024-12-16T12:18:54.649Z",
+      "requesterName": "Tumelo Mahlangu",
       "formType": "Employee Requisition"
     }
   ],

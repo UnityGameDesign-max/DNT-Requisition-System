@@ -15,7 +15,7 @@ export function getInitials(name: string){
 }
 
 
-export function formatDate(dateString:string) {
+export function formatDate( dateString:string ) {
 
   const date = new Date(dateString);
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -27,3 +27,17 @@ export function formatDate(dateString:string) {
 
   return `${day} ${month} ${year}`;
 }
+
+export const approvalDetails = (requisition: any) => [
+  { key: 'Requester Name:', value: requisition.requesterName },
+  { key: 'Employment Type:', value: requisition.employmentType },
+  { key: 'Resources Required:', value: requisition.resourcesRequired },
+  { key: 'Proposed Start Date:', value: requisition.proposedStartDate ? formatDate(requisition.proposedStartDate) : '' },
+  { key: 'Proposed End Date:', value: requisition.proposedEndDate ? formatDate(requisition.proposedEndDate) : '' },
+  { key: 'Reason Request:', value: requisition.reasonRequest },
+  { key: 'Salary Adjustment Reason:', value: requisition.salaryAdjustmentReason },
+  { key: 'Current Salary:', value: requisition.currentSalary },
+  { key: 'Recommended Salary:', value: requisition.recommendedSalary },
+  { key: 'Budget Availability:', value: requisition.budgetAvailability },
+  { key: 'Motivation:', value: requisition.motivation },
+];

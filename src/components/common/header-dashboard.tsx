@@ -28,12 +28,14 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
   
     const titles: Record<string, string> = {
       "/dashboard": "Dashboard",
-      "/dashboard/requisition-creation": "Requisition Form"
+      "/dashboard/requisition-creation": "Requisition Form",
+      "/dashboard/add-approval": "Approvals"
     };
 
     const descriptions: Record<string, string> = {
         "/dashboard": "Overall summary of requisition forms",
-        "/dashboard/requisition-creation": "Section for creating and managing requisition forms."
+        "/dashboard/requisition-creation": "Section for creating and managing requisition forms.",
+        "/dashboard/add-approval": "Approve and reject requisition forms"
     }
   
     const title = titles[location.pathname] || "New Dawn Requisition";
