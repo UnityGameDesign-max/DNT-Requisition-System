@@ -89,11 +89,38 @@
       "executiveManager": "Elij Mahlangu",
       "currentSalary": 1234.33,
       "recommendedSalary": 3445.53,
-      "approvers": [],
+      "approvers": [
+        {
+          "name": "Pinky Dlamini",
+          "role": "Finance Manager",
+          "date": "2024-12-17T13:17:49.636Z",
+          "digitalSignature": true
+        }
+      ],
       "date": "2024-12-17T13:02:14.446Z",
       "requesterName": "Issac Masemola",
       "formType": "Salary Adjustment Requisition",
       "status": "Pending"
+    },
+    {
+      "id": "c914",
+      "division": "Finance Department",
+      "executiveHead": "",
+      "salaryAdjustmentReason": "Retention",
+      "executiveManager": "Elij Mahlangu",
+      "currentSalary": 2333.23,
+      "recommendedSalary": 345.65,
+      "approvers": [],
+      "date": "2024-12-17T13:16:32.549Z",
+      "requesterName": null,
+      "formType": "Salary Adjustment Requisition",
+      "status": "Rejected",
+      "rejectionComment": "ssssssss",
+      "rejectBy": {
+        "name": "Pinky Dlamini",
+        "role": "Finance Manager",
+        "comment": "ssssssss"
+      }
     }
   ],
   "dashboardSummary": [

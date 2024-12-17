@@ -15,6 +15,33 @@ export function getInitials(name: string){
 }
 
 
+export function sortByKey<T>(array: T[], key: keyof T, order: 'asc' | 'desc' = 'asc'): T[] {
+  return array.slice().sort((a, b) => {
+      const valueA = a[key];
+      const valueB = b[key];
+
+      if (valueA instanceof Date || valueB instanceof Date) {
+          return order === 'asc'
+              ? new Date(valueA as any).getTime() - new Date(valueB as any).getTime()
+              : new Date(valueB as any).getTime() - new Date(valueA as any).getTime();
+      }
+
+      if (typeof valueA === 'string' && typeof valueB === 'string') {
+          return order === 'asc'
+              ? valueA.localeCompare(valueB)
+              : valueB.localeCompare(valueA);
+      }
+
+      if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return order === 'asc' ? valueA - valueB : valueB - valueA;
+      }
+
+      return 0;
+  });
+}
+
+
+
 export function formatDate( dateString:string ) {
 
   const date = new Date(dateString);

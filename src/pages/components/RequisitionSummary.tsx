@@ -27,6 +27,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
                 const res = await axios.get(`${API_BASE_URL}/allRequisitionForms`);
 
                 const sortedData = res.data.sort((a: any, b: any) => {
+                 
                   return new Date(b.date).getTime() - new Date(a.date).getTime();
                 });
                 setRequistionSummary(sortedData)

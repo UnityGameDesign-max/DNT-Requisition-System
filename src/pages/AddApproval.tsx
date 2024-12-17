@@ -68,7 +68,11 @@ export function AddApproval(){
             try{
                 const res = await axios.get(`${API_BASE_URL}/allRequisitionForms`)
                 if(res.data) {
-                    setAllRequisitionForms(res.data)
+
+                    const sortedData = res.data.sort((a: RequisitionForm, b: RequisitionForm) => 
+                        new Date(b.date).getTime() - new Date(a.date).getTime()
+                    );
+                    setAllRequisitionForms(sortedData)
                 }
             }catch(err){
                 throw err;
