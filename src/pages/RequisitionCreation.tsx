@@ -20,6 +20,7 @@ import axios from "axios";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
@@ -27,7 +28,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export function RequisitionCreation(){
 
     const navigate = useNavigate();
-    const name = localStorage.getItem("name");
+    const name = useSelector((state: any) => state.user.name)
 
     const employeeRequisitionForm = useForm<TEmployeeRequisitionValidator>({
         resolver: zodResolver(EmployeeRequisitionValidator),
@@ -67,11 +68,13 @@ export function RequisitionCreation(){
     const employeeRequisitionSubmit = async (employeeRequisitionData: TEmployeeRequisitionValidator) => {
         
         const formType = "Employee Requisition";
+        const initialStatus = "Pending";
 
         (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[] }).approvers = [];
         (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date }).date = new Date();
         (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null}).requesterName = name;
-        (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string}).formType = formType
+        (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string}).formType = formType;
+        (employeeRequisitionData as TEmployeeRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string; status: string}).status = initialStatus;
 
         try{
             const res = await axios.post(`${API_BASE_URL}/allRequisitionForms`, employeeRequisitionData);
@@ -87,11 +90,13 @@ export function RequisitionCreation(){
     const salaryAdjustmentRequisitionSubmit = async (salaryAjustmentData: TSalaryAdjustmentRequisitionValidator) => {
 
         const formType = "Salary Adjustment Requisition";
+        const initialStatus = "Pending";
 
         (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[] }).approvers = [];
         (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[]; date: Date }).date = new Date();
         (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null }).requesterName = name;
         (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string}).formType = formType;
+        (salaryAjustmentData as TSalaryAdjustmentRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string; status: string}).status = initialStatus;
 
         try{
             const res = await axios.post(`${API_BASE_URL}/allRequisitionForms`, salaryAjustmentData);
@@ -106,10 +111,13 @@ export function RequisitionCreation(){
     const expenseRequestRequisitionSubmit = async (expenseRequestData: TExpenseRequestRequisitionValidator) => {
 
         const formType = "Expense Request Requisition";
+        const initialStatus = "Pending";
+
         (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[] }).approvers = [];
         (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[]; date: Date }).date = new Date();
         (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null}).requesterName = name;
         (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string}).formType = formType;
+        (expenseRequestData as TExpenseRequestRequisitionValidator & { approvers: any[]; date: Date; requesterName: string | null; formType: string; status: string}).status = initialStatus;
 
         try{
             const res = await axios.post(`${API_BASE_URL}/allRequisitionForms`, expenseRequestData);

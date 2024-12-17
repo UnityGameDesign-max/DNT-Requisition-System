@@ -7,15 +7,14 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { data } from "@/utils/constanst";
-
 
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
-  const { role } = useSelector((state : any) => state.user)
+  const role = localStorage.getItem("role");
+  const name = localStorage.getItem("name");
 
 
   const filteredNavMain = data.navMain.filter(item => item.role.includes(role || ""));
@@ -23,8 +22,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar className="bg-customTheme-primary text-white rounded-tr-3xl rounded-br-3xl" collapsible="icon" {...props}>
       <SidebarHeader className="flex items-center justify-center mb-5">
         <img 
-            src="https://ndt.co.za/wp-content/uploads/2024/06/New-Dawn-Technologies-Logo-01-edited-1920x1441.png"
-            width={'100'}
+          src="https://ndt.co.za/wp-content/uploads/2024/06/New-Dawn-Technologies-Logo-01-edited-1920x1441.png"
+          width={'100'}
         />
         <h1 className="font-bold">NEW DAWN <span className="text-customTheme-secondary">Requisition</span></h1>
       </SidebarHeader>

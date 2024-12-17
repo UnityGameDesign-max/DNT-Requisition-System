@@ -14,7 +14,6 @@ export default function CardDashboard(props: CardProps){
         <CardContent>
             <section className="flex justify-between gap-2">
                 <p className="text-sm">{props.label}</p>
-
                 
             </section>
 

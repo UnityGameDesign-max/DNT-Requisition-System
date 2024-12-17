@@ -17,6 +17,7 @@ import { CircleCheck, CircleX } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -49,18 +50,17 @@ interface RequisitionForm {
 export function AddApproval(){
 
     const [allRequisitionForms, setAllRequisitionForms] = useState<RequisitionForm[]>([]);
-
+    const [openDialogId, setOpenDialogId] = useState<string | null>(null);
     const { name, role } = useSelector((state: any) => state.user);
+    const [open, setOpen] = useState(false);
 
-    console.log("name", name);
-    console.log("role", role);
 
     const form = useForm<TRejectionRequisitionValidator>({
         resolver: zodResolver(RejectionRequisitionValidator),
         defaultValues: {
             comment: ''
         }
-    })
+    });
 
 
     useEffect(() => {
@@ -102,7 +102,6 @@ export function AddApproval(){
 
         try {
 
-
             await axios.patch(`${API_BASE_URL}/allRequisitionForms/${requisitionId}`, updatedRequisition);
 
             setAllRequisitionForms((prevForms: any) =>
@@ -110,6 +109,8 @@ export function AddApproval(){
                     form.id === requisitionId ? { ...form, status: 'Rejected', rejectionComment: comment } : form
                 )
             );
+            setOpen(false);
+            toast.success("Rejected requisition successfully");
         } catch (err) {
             console.error("Error rejecting requisition:", err);
         }
@@ -119,7 +120,6 @@ export function AddApproval(){
 
         const requisition = allRequisitionForms.find((req:any) => req.id === requisitionId);
 
-        console.log("requisition", requisition)
 
         if (!requisition) {
             console.error("Requisition not found");
@@ -128,7 +128,9 @@ export function AddApproval(){
 
         const approver = {
             name: name,
-            role: role
+            role: role,
+            date: new Date(),
+            digitalSignature: true
         }
         try{
             const updatedApprovers = [...requisition.approvers, approver];
@@ -146,7 +148,8 @@ export function AddApproval(){
                     ? { ...form, approvers: updatedApprovers }
                     : form
                 )
-            )
+            );
+            toast.success("Approved the the requisition");
             
         } catch(err) {
             throw err;
@@ -170,22 +173,29 @@ export function AddApproval(){
                             <div className="flex gap-2">
                                 <Button 
                                     onClick={() => handleApprove(requisition.id)} 
-                                    disabled={isApproved}
+                                    disabled={isApproved || requisition.status === "Approved"}
                                     variant='outline'>
                                     <CircleCheck className="text-green-400" />
                                     {isApproved ? 'Approved' : 'Approve'}
                                 </Button>
 
-                                <Dialog>
-                                    <DialogTrigger>
-                                        <Button disabled={requisition.status === 'Rejected'} variant='outline'>
+                                <Dialog open={open} onOpenChange={setOpen}>
+                                    <DialogTrigger asChild>
+                                        <Button 
+                                            disabled={requisition.status === 'Rejected' || requisition.status === 'Approved'} 
+                                            variant='outline'
+                                            onClick={() => setOpenDialogId(requisition.id)}
+                                        >
                                             <CircleX className="text-red-400"/>
                                             Reject
                                         </Button>
                                     </DialogTrigger>
                                     <DialogContent className="bg-white">
                                         <Form {...form}>
-                                            <form onSubmit={form.handleSubmit((data) => handleReject(requisition.id, data.comment))}>
+                                            <form onSubmit={form.handleSubmit((data) => {
+                                                handleReject(requisition.id, data.comment);
+                                                setOpenDialogId(null);
+                                                })}>
                                                 <Label htmlFor="comment">Rejection Comment</Label>
                                                 <FormField
                                                     control={form.control}
@@ -200,7 +210,7 @@ export function AddApproval(){
                                                     )}
                                                 />
 
-                                                <Button type="submit">Reject</Button>
+                                                <Button className="my-3" type="submit">Reject</Button>
                                             </form>
 
                                             

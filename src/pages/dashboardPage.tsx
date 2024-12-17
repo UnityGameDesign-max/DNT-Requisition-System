@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 import { useEffect, useState } from "react";
-import { RequisitionSummary } from "./components/requisition";
+import { RequisitionSummary } from "./components/RequisitionSummary";
 
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -20,7 +20,7 @@ export const DashboardHome = () => {
     const [dashboardSummaryInfo, setDashboardSummaryInfo] = useState({
         users: "0",
         approvedForms: "0",
-        totalForms: "0",
+        rejectedForms: "0",
         pendingForms: "0"
     })
 
@@ -42,7 +42,7 @@ export const DashboardHome = () => {
         },
         {
             label: "Rejected Forms",
-            amount: dashboardSummaryInfo.totalForms,
+            amount: dashboardSummaryInfo.rejectedForms,
             icon: CircleX
         },
 
@@ -51,21 +51,42 @@ export const DashboardHome = () => {
     useEffect(() => {
         const fetchDashboardData = async () => {
             try{
-                const res = await axios.get(`${API_BASE_URL}/dashboardSummary`);
+                const res = await axios.get(`${API_BASE_URL}/allRequisitionForms`)
                 if(res.data.length){
-                    setDashboardSummaryInfo({
-                        users: res.data[0].users,
-                        totalForms: res.data[0].totalForms,
-                        pendingForms: res.data[0].pendingForms,
-                        approvedForms: res.data[0].approvedForms
-                    })
+
+                    const approvedForms = res.data.filter((form: any) => form.status === "Approved").length;
+                    const pendingForms = res.data.filter((form: any)=> form.status === "Pending").length;
+                    const rejectedForms = res.data.filter((form: any) => form.status === "Rejected").length;
+                    setDashboardSummaryInfo(prevState => ({
+                        ...prevState,
+                        approvedForms,
+                        pendingForms,
+                        rejectedForms
+                    }));
                 }
-                console.log("res", res)
             }catch(err){
                 throw err;
             }
         }
 
+        const fetchUsers = async () => {
+            try{
+                const res = await axios.get(`${API_BASE_URL}/users`);
+                if(res.data.length){
+                    console.log("res", res.data);
+                    const users = res.data.length;
+
+                    setDashboardSummaryInfo(prevState => ({
+                        ...prevState,
+                        users: users
+                    }))
+                }
+            }catch(err){
+                throw err;
+            }
+        }
+
+        fetchUsers();
         fetchDashboardData();
     },[])
 

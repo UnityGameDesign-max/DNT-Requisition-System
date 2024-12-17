@@ -1,13 +1,12 @@
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from "@/utils/validation-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/state/userSlice";
 import { toast } from "sonner";

@@ -21,8 +21,8 @@ const userSlice = createSlice({
             state.role = action.payload.role;
             state.isAuthenticated = true;
             state.name = action.payload.name;
-            localStorage.setItem("role", action.payload.role);
-            localStorage.setItem("name", action.payload.name);
+            localStorage.setItem("role", state.role);
+            localStorage.setItem("name", state.name);
         },
         logoutUser: (state) => {
             state.role = null;

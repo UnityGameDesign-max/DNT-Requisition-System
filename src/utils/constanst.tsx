@@ -21,11 +21,5 @@ export const data = {
         icon: ClipboardPlus,
         role: ["Admin", "Human Resources", "Finance Manager"]
       },
-      {
-        title: "Approvals",
-        url: "/dashboard/approvals",
-        icon: Bell,
-        role: ["employee"]
-      },
     ]
   }

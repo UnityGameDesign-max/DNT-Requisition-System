@@ -7,6 +7,7 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar";
 import { getInitials } from "@/lib/utils";
+import { useSelector } from "react-redux";
 
 
 import { Outlet } from "react-router-dom";
@@ -15,9 +16,10 @@ import { Outlet } from "react-router-dom";
 export function DashboardContainer() {
 
 
-  const role = localStorage.getItem("role") || "";
-  const name = localStorage.getItem("name") || "";
+  // const { name, role } = useSelector((state: any) => state.user);
 
+  const name = localStorage.getItem("name") || '';
+  const role = localStorage.getItem("role") || '';
 
   return (
     <SidebarProvider
@@ -32,6 +34,7 @@ export function DashboardContainer() {
         <SidebarInset>
             <MaxWidthWrapper className="w-full">
                 <header className="p-2">
+
                     <Header name={name} role={role} initials={getInitials(name)}/>
                 </header>
                 <div className="p-2 md:p-6 lg:p-8">
