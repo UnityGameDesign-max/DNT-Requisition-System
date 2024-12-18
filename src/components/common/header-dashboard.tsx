@@ -70,7 +70,7 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
                         </Avatar>
                         <div>
                             <h2 className="text-base">{name}</h2>
-                            <p className="text-xs text-gray-500">{role}</p>
+                            <p className="text-xs text-customTheme-secondary">{role}</p>
                         </div>
                     </DropdownMenuLabel>
 
