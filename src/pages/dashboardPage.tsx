@@ -73,7 +73,7 @@ export const DashboardHome = () => {
             try{
                 const res = await axios.get(`${API_BASE_URL}/users`);
                 if(res.data.length){
-                    console.log("res", res.data);
+                  
                     const users = res.data.length;
 
                     setDashboardSummaryInfo(prevState => ({
