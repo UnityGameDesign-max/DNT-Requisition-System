@@ -14,6 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs-inline";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { employmentType, salaryAdjustmentReason } from "@/utils/constanst";
 import { EmployeeRequisitionValidator, ExpenseRequestRequisitionValidator, SalaryAdjustmentRequisitionValidator, TEmployeeRequisitionValidator, TExpenseRequestRequisitionValidator, TSalaryAdjustmentRequisitionValidator } from "@/utils/validation-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
@@ -129,9 +130,7 @@ export function RequisitionCreation(){
         }
     }
 
-    const employmentType = ["Permanent", "Temporary"];
 
-    const salaryAdjustmentReason = ["Promotion", "Performance", "Retention", "Normal Annual Adjustment"]
 
     return (
         <DashboardPageWrapper>
@@ -453,10 +452,8 @@ export function RequisitionCreation(){
                                                                             </SelectItem>
                                                                         )
                                                                     })}
-                                                            
                                                                 </SelectContent>
                                                             </Select>
-                                                            
                                                         </FormItem>
                                                     )}
                                                 />

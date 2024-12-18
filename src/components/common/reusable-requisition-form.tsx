@@ -17,7 +17,7 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
-type FieldConfig = {
+export type FieldConfig = {
   name: string;
   type: "text" | "textarea" | "select" | "date";
   label: string;

@@ -14,7 +14,6 @@ import { data } from "@/utils/constanst";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const role = localStorage.getItem("role");
-  const name = localStorage.getItem("name");
 
 
   const filteredNavMain = data.navMain.filter(item => item.role.includes(role || ""));

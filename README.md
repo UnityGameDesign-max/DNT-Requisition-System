@@ -39,31 +39,39 @@ json-server --watch db/db.json --port 5000
 ### 1. Solution Approach
 - This project was developed to simulate real-world scenarios of front-end development integrated with a backend service. The following techniques and tools were utilized:
 
-- I have users already in the db json server I added users already to bypass the process of signing up a new user and giving the user roles. I thought this will be easy to test and use the application right away.
+- I have users already in the db json server I added users already to bypass the process of signing up a new user and giving the user roles. I thought this will be easy to test and use the application right away. The authorization of users happens because of role since I am using a JSON server that act as a Backend Service.
 
-- I have three distinct roles available within the application:
+- I have four distinct roles available within the application:
   #### 1. Employee
   #### 2. Finance Manager
   #### 3. HR 
   #### 4. Admin (Line Manager or Final Approver)
 
-- The reason I chose these roles is that I was initially unclear about the distinction between the Line Manager and the Approver, specifically regarding who is responsible for making the final decision on approving the requisition. Then I decided to use Admin.
+- Initially, I was uncertain about the distinction between the Line Manager and the Approver, particularly regarding who holds the final authority to approve requisitions. To clarify this hierarchy, I designated the roles as Finance Manager, Human Resources, and Admin (Final Approver).
+
+- Understanding the organizational hierarchy and the specific responsibilities of each role was challenging. Consequently, I established the aforementioned roles to ensure clarity in the approval process.
+
+- In the database JSON server, I have configured five users. Authentication is handled via email only, as I am utilizing a mocked backend service. The following email addresses can be used to sign in, corresponding to specific users and their roles:
+
+    - **employee@ndt.com (role: employee)**
+    - **hr@ndt.com (role: Human Resources)**
+    - **finance@ndt.com (role: Finance Manager)**
+    - **admin@ndt.com (role: Admin or Final Approver)**
+- Please use the appropriate email address to sign in according to your assigned role.
 
 
 - Redux State Management: I use Redux for managing the global application state and handling asynchronous API interactions. To persist state and prevent losing it upon refreshing the page or application, I leverage localStorage alongside Redux. While I considered using Redux Persist, a dependency mismatch caused it to malfunction, leading me to opt for localStorage instead. In real-world scenarios, localStorage is typically used to store tokens after user authentication.
 
-- Mocked API using JSON Server: Used db.json to serve and manage mock data, simulating a backend service. I only have two endpoints one it's for users and another one is for requisitions.
 
-- Error Handling: Incorporated user-friendly error notifications for scenarios like failed API requests or invalid input.
+The approval and rejection process for requisitions is structured as follows:
 
-- Reusable Components: Designed modular and reusable components for better scalability and maintainability.
+- **Approval Process**:
+    - The Admin holds the ultimate authority to approve requisitions, serving as the final approver.
+    - Additionally, multiple users are permitted to approve a requisition during its review cycle.
 
+- **Rejection Process**:
+    - Only a single individual is authorized to reject a requisition.
+    - Once a requisition is rejected, it becomes immutable; no further approvals can be granted, nor can its status be altered.
 
-### 2. Flow of the Application
-- Data Fetching and Display: On application load, data is fetched from the mocked API and displayed in an interactive table or list.
-
-- CRUD Operations: Users can perform Create, Read, Update, and Delete (CRUD) operations on the data using forms and buttons. These actions trigger API calls to the JSON Server.
-
-- State Updates: The UI reflects real-time updates to the data, ensuring a seamless user experience.
-
-- Routing : Integrated react-router-dom for navigation between pages or sections of the application.
+- **Post-Approval Modifications**:
+    - After a requisition has been approved, the approver retains the capability to approve again. The approver can only change the status to reject

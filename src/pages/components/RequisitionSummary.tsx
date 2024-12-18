@@ -171,8 +171,6 @@ import { Profile } from "@/components/common/profile";
                    }
                  
                 </div>
-                 
-                  
                   : null}
               </TableCell>
               <TableCell><p>{formatDate(requisition.date)}</p></TableCell>

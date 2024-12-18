@@ -23,3 +23,19 @@ export const data = {
       },
     ]
   }
+
+export const formTypes = {
+  EmployeeRequisition: "Employee Requisition",
+  SalaryAdjustmentRequisition: "Salary Adjustment Requisition",
+  ExpenseRequestRequisition: "Expense Request Requisition"
+}
+
+export const status ={
+  Pending: "Pending",
+  Approved: "Approved",
+  Rejected: "Rejected"
+}
+
+export const employmentType = ["Permanent", "Temporary"];
+
+export const salaryAdjustmentReason = ["Promotion", "Performance", "Retention", "Normal Annual Adjustment"]

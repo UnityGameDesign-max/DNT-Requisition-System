@@ -243,6 +243,10 @@ export function AddApproval() {
                                         <ApprovalDetailSection keys={approval.key} value={approval.value} />
                                     ))}
                                 </div>
+
+                                {requisition.rejectionComment ? (
+                                    <div className="pl-6"><p className="text-red-400 text-sm">Rejection comment: {requisition.rejectionComment}</p></div>
+                                ): null}
                             </CardContent>
                         );
                     })
