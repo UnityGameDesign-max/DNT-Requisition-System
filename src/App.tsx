@@ -1,8 +1,8 @@
 import { Toaster } from 'sonner';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignIn from './pages/SignIn';
-import { DashboardContainer } from './pages/components/dashboardContainer';
-import { DashboardHome } from './pages/dashboardPage';
+import { DashboardContainer } from './pages/components/DashboardContainer';
+import { DashboardHome } from './pages/DashboardPage';
 import { RequisitionCreation } from './pages/RequisitionCreation';
 import { AddApproval } from './pages/AddApproval';
 

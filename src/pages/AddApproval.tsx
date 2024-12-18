@@ -41,17 +41,15 @@ interface RequisitionForm {
     budgetAvailability?: boolean;
     reasonRequest?: string;
     rejectionComment?: string;
-  }
-  
-  
+    status: string;
+    rejectBy?: { name: string; role: string; comment: string };
+}
 
-export function AddApproval(){
-
+export function AddApproval() {
     const [allRequisitionForms, setAllRequisitionForms] = useState<RequisitionForm[]>([]);
     const { name, role } = useSelector((state: any) => state.user);
     const [open, setOpen] = useState<boolean>(false);
     const [requisitionLoad, setRequisitionLoad] = useState<boolean>(true);
-
 
     const form = useForm<TRejectionRequisitionValidator>({
         resolver: zodResolver(RejectionRequisitionValidator),
@@ -60,38 +58,31 @@ export function AddApproval(){
         }
     });
 
-
     useEffect(() => {
         const fetchApprovals = async () => {
-            try{
-                const res = await axios.get(`${API_BASE_URL}/allRequisitionForms`)
-                if(res.data) {
-
-                    const sortedData = res.data.sort((a: RequisitionForm, b: RequisitionForm) => 
+            try {
+                const res = await axios.get(`${API_BASE_URL}/allRequisitionForms`);
+                if (res.data) {
+                    const sortedData = res.data.sort((a: RequisitionForm, b: RequisitionForm) =>
                         new Date(b.date).getTime() - new Date(a.date).getTime()
                     );
-                    setAllRequisitionForms(sortedData)
+                    setAllRequisitionForms(sortedData);
                 }
-            }catch(err){
+            } catch (err) {
                 throw err;
             }
-        }
+        };
 
         fetchApprovals();
-    },[requisitionLoad]);
+    }, [requisitionLoad]);
 
-    const handleReject = async (requisitionId:string, comment:string) => {
-        const requisition = allRequisitionForms.find((req: any) => {
-            setRequisitionLoad(!requisitionLoad);
-            return req.id === requisitionId
-        });
+    const handleReject = async (requisitionId: string, comment: string) => {
+        const requisition = allRequisitionForms.find((req: any) => req.id === requisitionId);
 
         if (!requisition) {
             console.error("Requisition not found");
             return;
-        };
-
-        
+        }
 
         const rejection = {
             name: name,
@@ -101,14 +92,12 @@ export function AddApproval(){
 
         const updatedRequisition = {
             ...requisition,
-            status: 'Rejected', 
+            status: 'Rejected',
             rejectionComment: comment,
             rejectBy: rejection
         };
 
-
         try {
-
             await axios.patch(`${API_BASE_URL}/allRequisitionForms/${requisitionId}`, updatedRequisition);
 
             setAllRequisitionForms((prevForms: any) =>
@@ -121,15 +110,18 @@ export function AddApproval(){
         } catch (err) {
             console.error("Error rejecting requisition:", err);
         }
-    }
+    };
 
-    const handleApprove = async (requisitionId:string) => {
-
-        const requisition = allRequisitionForms.find((req:any) => req.id === requisitionId);
-
+    const handleApprove = async (requisitionId: string) => {
+        const requisition = allRequisitionForms.find((req: any) => req.id === requisitionId);
 
         if (!requisition) {
             console.error("Requisition not found");
+            return;
+        }
+
+        if (role !== 'Admin') {
+            console.error("Only admin can approve requisitions");
             return;
         }
 
@@ -138,121 +130,110 @@ export function AddApproval(){
             role: role,
             date: new Date(),
             digitalSignature: true
-        }
-        try{
+        };
+
+        try {
             const updatedApprovers = [...requisition.approvers, approver];
-            const res = await axios.patch(`${API_BASE_URL}/allRequisitionForms/${requisitionId}`, {
+            await axios.patch(`${API_BASE_URL}/allRequisitionForms/${requisitionId}`, {
                 id: requisitionId,
                 approvers: updatedApprovers,
-                status: approver.role === 'Admin' ? 'Approved' : 'Pending'
+                status: 'Approved' // Only Admin can set the status to 'Approved'
             });
 
-            console.log("res", res);
             setRequisitionLoad(!requisitionLoad);
 
-            setAllRequisitionForms((prevForms : any) => 
-                prevForms.map((form : any) => 
+            setAllRequisitionForms((prevForms: any) =>
+                prevForms.map((form: any) =>
                     form.id === requisitionId
-                    ? { ...form, approvers: updatedApprovers }
-                    : form
+                        ? { ...form, approvers: updatedApprovers, status: 'Approved' }
+                        : form
                 )
             );
-            toast.success("Approved the the requisition");
-            
-        } catch(err) {
-            throw err;
+            toast.success("Approved the requisition");
+        } catch (err) {
+            console.error("Error approving requisition:", err);
         }
-    }
+    };
 
     return (
         <DashboardPageWrapper>
             {
-            allRequisitionForms.length > 0 ?
-            allRequisitionForms.map((requisition: any) => {
-                
-                const isApproved = requisition.approvers.some((approver: { name: string }) => approver.name === name) || requisition.status === "Approved" && role === 'Admin';
+                allRequisitionForms.length > 0 ?
+                    allRequisitionForms.map((requisition: any) => {
+                        const isApproved = requisition.approvers.some((approver: { name: string }) => approver.name === name) || requisition.status === "Approved" && role === 'Admin';
+                        const isRejected = requisition.status === "Rejected";
 
-                return (
-                    <CardContent className="my-4">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h1 className="font-semibold">{requisition.formType}</h1>
-                                <p className="text-customTheme-muted text-sm">{requisition.division}</p>
-                            </div>
-                        
-                            <div className="flex gap-2">
-                                <Button 
-                                    onClick={() => handleApprove(requisition.id)} 
-                                    disabled={isApproved || requisition.status === "Approved" || requisition.status === "Rejected"}
-                                    variant='outline'>
-                                    <CircleCheck className="text-green-400" />
-                                    {isApproved ? 'Approved' : 'Approve'}
-                                </Button>
+                        return (
+                            <CardContent className="my-4" key={requisition.id}>
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h1 className="font-semibold">{requisition.formType}</h1>
+                                        <p className="text-customTheme-muted text-sm">{requisition.division}</p>
+                                    </div>
 
-                                <Dialog open={open} onOpenChange={setOpen}>
-                                    <DialogTrigger asChild>
-                                        <Button 
-                                            disabled={requisition.status === 'Rejected' || requisition.status === 'Approved'} 
-                                            variant='outline'
-                                            
-                                        >
-                                            <CircleX className="text-red-400"/>
-                                            Reject
+                                    <div className="flex gap-2">
+                                        <Button
+                                            onClick={() => handleApprove(requisition.id)}
+                                            disabled={isApproved || requisition.status === "Approved" || requisition.status === "Rejected"}
+                                            variant='outline'>
+                                            <CircleCheck className="text-green-400" />
+                                            {isApproved ? 'Approved' : 'Approve'}
                                         </Button>
-                                    </DialogTrigger>
-                                    <DialogContent className="bg-white">
-                                        <Form {...form}>
-                                            <form onSubmit={form.handleSubmit((data) => {
-                                                handleReject(requisition.id, data.comment);
-                                            
-                                                })}>
-                                                <Label htmlFor="comment">Rejection Comment</Label>
-                                                <FormField
-                                                    control={form.control}
-                                                    name="comment"
-                                                    render={({ field }) => (
-                                                        <FormItem>
-                                                            <FormControl>
-                                                                <Textarea {...field}/>
-                                                            </FormControl>
-                                                            <FormMessage className="text-red-400"/>
-                                                        </FormItem>
-                                                    )}
-                                                />
 
-                                                <Button className="my-3" type="submit">Reject</Button>
-                                            </form>
-               
-                                        </Form>
-                                    </DialogContent>
-                                </Dialog>
-                               
-                            </div>
+                                        <Dialog open={open} onOpenChange={setOpen}>
+                                            <DialogTrigger asChild>
+                                                <Button
+                                                    disabled={isRejected || requisition.status === "Approved"}
+                                                    variant='outline'>
+                                                    <CircleX className="text-red-400" />
+                                                    Reject
+                                                </Button>
+                                            </DialogTrigger>
+                                            <DialogContent className="bg-white">
+                                                <Form {...form}>
+                                                    <form onSubmit={form.handleSubmit((data) => {
+                                                        handleReject(requisition.id, data.comment);
+                                                    })}>
+                                                        <Label htmlFor="comment">Rejection Comment</Label>
+                                                        <FormField
+                                                            control={form.control}
+                                                            name="comment"
+                                                            render={({ field }) => (
+                                                                <FormItem>
+                                                                    <FormControl>
+                                                                        <Textarea {...field} />
+                                                                    </FormControl>
+                                                                    <FormMessage className="text-red-400" />
+                                                                </FormItem>
+                                                            )}
+                                                        />
+                                                        <Button className="my-3" type="submit">Reject</Button>
+                                                    </form>
+                                                </Form>
+                                            </DialogContent>
+                                        </Dialog>
+                                    </div>
+                                </div>
 
-                        
+                                <Separator className="bg-customTheme-muted my-1" />
+
+                                <div className="grid grid-cols-4 p-6 gap-4">
+                                    {approvalDetails(requisition).map((approval) => (
+                                        <ApprovalDetailSection keys={approval.key} value={approval.value} />
+                                    ))}
+                                </div>
+                            </CardContent>
+                        );
+                    })
+                    :
+                    <div className="flex min-h-[400px] flex-col items-center justify-center rounded-md border p-8 text-center animate-in fade-in-50">
+                        <div className="flex h-20 w-20 items-center justify-center rounded-full bg-customTheme-primary/10">
+                            <BookOpenCheck className="w-10 h-10 text-customTheme-primary" />
                         </div>
+                        <h2 className="mt-6">There are currently no requisitions available yet.</h2>
+                    </div>
+            }
 
-                        <Separator className="bg-customTheme-muted my-1"/>
-                        
-                        <div className="grid grid-cols-4 p-6 gap-4">
-                            {approvalDetails(requisition).map((approval) => (
-                                <ApprovalDetailSection keys={approval.key} value={approval.value}/>
-                            ))}
-
-                        </div>
-                    </CardContent>
-                )
-            })
-            :
-
-            <div className="flex min-h-[400px] flex-col items-center justify-center rounded-md border p-8 text-center animate-in fade-in-50">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-customTheme-primary/10">
-                    <BookOpenCheck className="w-10 h-10 text-customTheme-primary" />
-                </div>
-                <h2 className="mt-6">There are currently no requisitions available yet.</h2>
-            </div>
-        }
-          
         </DashboardPageWrapper>
-    )
+    );
 }
