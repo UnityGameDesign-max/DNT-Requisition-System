@@ -1,4 +1,4 @@
-import { Bell, ClipboardPlus, LayoutDashboard, SquarePen } from "lucide-react";
+import { ClipboardPlus, LayoutDashboard, SquarePen } from "lucide-react";
 
 export const data = {
 
