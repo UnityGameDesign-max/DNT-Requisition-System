@@ -52,7 +52,8 @@ export function AddApproval(){
     const [allRequisitionForms, setAllRequisitionForms] = useState<RequisitionForm[]>([]);
     const [openDialogId, setOpenDialogId] = useState<string | null>(null);
     const { name, role } = useSelector((state: any) => state.user);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState<boolean>(false);
+    const [requisitionLoad, setRequisitionLoad] = useState<boolean>(true);
 
 
     const form = useForm<TRejectionRequisitionValidator>({
@@ -80,15 +81,20 @@ export function AddApproval(){
         }
 
         fetchApprovals();
-    },[]);
+    },[requisitionLoad]);
 
     const handleReject = async (requisitionId:string, comment:string) => {
-        const requisition = allRequisitionForms.find((req: any) => req.id === requisitionId);
+        const requisition = allRequisitionForms.find((req: any) => {
+            setRequisitionLoad(!requisitionLoad);
+            return req.id === requisitionId
+        });
 
         if (!requisition) {
             console.error("Requisition not found");
             return;
-        }
+        };
+
+        
 
         const rejection = {
             name: name,
@@ -145,6 +151,7 @@ export function AddApproval(){
             });
 
             console.log("res", res);
+            setRequisitionLoad(!requisitionLoad);
 
             setAllRequisitionForms((prevForms : any) => 
                 prevForms.map((form : any) => 
@@ -188,7 +195,7 @@ export function AddApproval(){
                                         <Button 
                                             disabled={requisition.status === 'Rejected' || requisition.status === 'Approved'} 
                                             variant='outline'
-                                            onClick={() => setOpenDialogId(requisition.id)}
+                                        
                                         >
                                             <CircleX className="text-red-400"/>
                                             Reject
