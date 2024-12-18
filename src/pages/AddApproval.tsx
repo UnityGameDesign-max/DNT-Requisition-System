@@ -10,10 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { approvalDetails } from "@/lib/utils";
 import { RejectionRequisitionValidator, TRejectionRequisitionValidator } from "@/utils/validation-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-
 import axios from "axios";
-import { CircleCheck, CircleX } from "lucide-react";
+import { BookOpenCheck, CircleCheck, CircleX } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -50,7 +48,6 @@ interface RequisitionForm {
 export function AddApproval(){
 
     const [allRequisitionForms, setAllRequisitionForms] = useState<RequisitionForm[]>([]);
-    const [openDialogId, setOpenDialogId] = useState<string | null>(null);
     const { name, role } = useSelector((state: any) => state.user);
     const [open, setOpen] = useState<boolean>(false);
     const [requisitionLoad, setRequisitionLoad] = useState<boolean>(true);
@@ -169,7 +166,9 @@ export function AddApproval(){
 
     return (
         <DashboardPageWrapper>
-            {allRequisitionForms.map((requisition: any) => {
+            {
+            allRequisitionForms.length > 0 ?
+            allRequisitionForms.map((requisition: any) => {
                 
                 const isApproved = requisition.approvers.some((approver: { name: string }) => approver.name === name) || requisition.status === "Approved" && role === 'Admin';
 
@@ -184,7 +183,7 @@ export function AddApproval(){
                             <div className="flex gap-2">
                                 <Button 
                                     onClick={() => handleApprove(requisition.id)} 
-                                    disabled={isApproved || requisition.status === "Approved"}
+                                    disabled={isApproved || requisition.status === "Approved" || requisition.status === "Rejected"}
                                     variant='outline'>
                                     <CircleCheck className="text-green-400" />
                                     {isApproved ? 'Approved' : 'Approve'}
@@ -195,7 +194,7 @@ export function AddApproval(){
                                         <Button 
                                             disabled={requisition.status === 'Rejected' || requisition.status === 'Approved'} 
                                             variant='outline'
-                                        
+                                            
                                         >
                                             <CircleX className="text-red-400"/>
                                             Reject
@@ -205,7 +204,7 @@ export function AddApproval(){
                                         <Form {...form}>
                                             <form onSubmit={form.handleSubmit((data) => {
                                                 handleReject(requisition.id, data.comment);
-                                                setOpenDialogId(null);
+                                            
                                                 })}>
                                                 <Label htmlFor="comment">Rejection Comment</Label>
                                                 <FormField
@@ -223,9 +222,7 @@ export function AddApproval(){
 
                                                 <Button className="my-3" type="submit">Reject</Button>
                                             </form>
-
-                                            
-                                            
+               
                                         </Form>
                                     </DialogContent>
                                 </Dialog>
@@ -245,7 +242,16 @@ export function AddApproval(){
                         </div>
                     </CardContent>
                 )
-            })}
+            })
+            :
+
+            <div className="flex min-h-[400px] flex-col items-center justify-center rounded-md border p-8 text-center animate-in fade-in-50">
+                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-customTheme-primary/10">
+                    <BookOpenCheck className="w-10 h-10 text-customTheme-primary" />
+                </div>
+                <h2 className="mt-6">There are currently no requisitions available yet.</h2>
+            </div>
+        }
           
         </DashboardPageWrapper>
     )

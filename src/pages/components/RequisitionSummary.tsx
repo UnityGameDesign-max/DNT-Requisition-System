@@ -73,14 +73,113 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
               <TableCell><p>{requisition.division}</p></TableCell>
               <TableCell>
                 {requisition.status === "Approved" ? 
-                <div className="bg-green-500/10 p-1 rounded-full w-[90px]">
+
+                <div className="flex">
+                  <div className="bg-green-500/10 p-1 rounded-full w-[90px]">
                     <p className="text-green-500 ml-1.5 font-medium">{ requisition.status }</p>
-                </div> : requisition.status === "Rejected" ? <div className="bg-red-500/10 p-1 rounded-full w-[75px]">
-                  <p className="text-red-500 font-medium ml-1">{requisition.status}</p>
-                  </div> :  requisition.status === "Pending" || requisition.approvers.length === 0
-                ? <div className="bg-yellow-500/10 p-1 rounded-full w-[70px]">
+                  </div> 
+
+                  {
+                    requisition.approvers.length > 0 ?
+                    
+                    requisition.approvers.map((req: any) => (
+                      <div className="flex -space-x-2 *:ring *:ring-white">
+                        <HoverCard>
+                          <HoverCardTrigger>
+                            <Avatar className="w-8 h-8">
+                              <AvatarFallback>{getInitials(req.name)}</AvatarFallback>
+                            </Avatar>
+                          </HoverCardTrigger>
+                          <HoverCardContent className="bg-white w-30 flex gap-3">
+                            <Avatar className="w-8 h-8">
+                              <AvatarFallback className="text-customTheme-primary">{getInitials(req.name)}</AvatarFallback>
+                            </Avatar>
+                           <div>
+                            <p className="font-medium text-black">{req.name}</p>
+                            <p className="text-customTheme-secondary text-sm">{req.role}</p>
+                           </div>
+                           
+                          </HoverCardContent>
+                        </HoverCard>
+                      </div>
+                    ))  
+                    :
+                    null
+                   }
+                  
+
+                </div>
+                
+                
+                
+                : requisition.status === "Rejected" ? 
+                
+                  <div className="flex gap-2">
+                      <div className="bg-red-500/10 p-1 rounded-full w-[75px]">
+                        <p className="text-red-500 font-medium ml-1">{requisition.status}</p>
+                      </div>
+                      <HoverCard>
+                          <HoverCardTrigger>
+                            <Avatar className="w-8 h-8">
+                              <AvatarFallback>{getInitials(requisition.rejectBy.name)}</AvatarFallback>
+                            </Avatar>
+                          </HoverCardTrigger>
+                          <HoverCardContent className="bg-white w-30 flex gap-3">
+                            <Avatar className="w-8 h-8">
+                              <AvatarFallback className="text-customTheme-primary">{getInitials(requisition.rejectBy.name)}</AvatarFallback>
+                            </Avatar>
+                           <div>
+                            <p className="font-medium text-black">{requisition.rejectBy.name}</p>
+                            <p className="text-customTheme-secondary text-sm">{requisition.rejectBy.role}</p>
+                           </div>
+                           
+                          </HoverCardContent>
+                        </HoverCard>
+                      
+                  </div>
+                     
+                  :  requisition.status === "Pending" || requisition.approvers.length === 0
+                ? 
+                
+                <div className="flex">
+
+                  <div className="bg-yellow-500/10 p-1 rounded-full w-[75px]">
                     <p className="text-yellow-500 font-medium ml-1">{requisition.status || "Pending"}</p>
-                  </div> : null}
+                  </div> 
+
+                  {/* {requisition.approvers.length > 0 ? ()} */}
+                  {
+                    requisition.approvers.length > 0 ?
+                    
+                    requisition.approvers.map((req: any) => (
+                      <div className="flex -space-x-2 *:ring *:ring-white">
+                        <HoverCard>
+                          <HoverCardTrigger>
+                            <Avatar className="w-8 h-8">
+                              <AvatarFallback>{getInitials(req.name)}</AvatarFallback>
+                            </Avatar>
+                          </HoverCardTrigger>
+                          <HoverCardContent className="bg-white w-30 flex gap-3">
+                            <Avatar className="w-8 h-8">
+                              <AvatarFallback className="text-customTheme-primary">{getInitials(req.name)}</AvatarFallback>
+                            </Avatar>
+                           <div>
+                            <p className="font-medium text-black">{req.name}</p>
+                            <p className="text-customTheme-secondary text-sm">{req.role}</p>
+                           </div>
+                           
+                          </HoverCardContent>
+                        </HoverCard>
+                      </div>
+                    ))  
+                    :
+                    null
+                   }
+                 
+                </div>
+                 
+                  
+                  : null}
               </TableCell>
               <TableCell><p>{formatDate(requisition.date)}</p></TableCell>
             </TableRow>

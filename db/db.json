@@ -33,203 +33,24 @@
   ],
   "allRequisitionForms": [
     {
-      "id": "79a9",
-      "division": "Cleaning Division",
+      "id": "1495",
+      "division": "Cleaning Department",
       "executiveHead": "",
-      "salaryAdjustmentReason": "Performance",
+      "salaryAdjustmentReason": "Retention",
       "executiveManager": "Elij Mahlangu",
-      "currentSalary": 3234.43,
-      "recommendedSalary": 7676.46,
-      "approvers": [
-        {
-          "name": "Elij Mahlangu",
-          "role": "Admin",
-          "date": "2024-12-17T12:55:32.467Z",
-          "digitalSignature": true
-        },
-        {
-          "name": null,
-          "role": null,
-          "date": "2024-12-17T18:44:18.745Z",
-          "digitalSignature": true
-        }
-      ],
-      "date": "2024-12-17T12:51:04.046Z",
+      "currentSalary": 234.34,
+      "recommendedSalary": 233.43,
+      "approvers": [],
+      "date": "2024-12-18T11:21:39.228Z",
       "requesterName": "Issac Masemola",
       "formType": "Salary Adjustment Requisition",
       "status": "Rejected",
-      "rejectionComment": "Reject comment!",
+      "rejectionComment": "Reject because salary is high",
       "rejectBy": {
         "name": "Pinky Dlamini",
         "role": "Finance Manager",
-        "comment": "Reject comment!"
+        "comment": "Reject because salary is high"
       }
-    },
-    {
-      "id": "ed8f",
-      "division": "Finance Department",
-      "resourcesRequired": "Courses Material",
-      "employmentType": "Temporary",
-      "executiveHead": "Mr Seema",
-      "proposedStartDate": "2024-12-01T22:00:00.000Z",
-      "proposedEndDate": "2024-12-13T22:00:00.000Z",
-      "motivation": "The motivation",
-      "approvers": [
-        {
-          "name": "Elij Mahlangu",
-          "role": "Admin",
-          "date": "2024-12-17T12:55:57.579Z",
-          "digitalSignature": true
-        }
-      ],
-      "date": "2024-12-17T12:51:37.036Z",
-      "requesterName": "Issac Masemola",
-      "formType": "Employee Requisition",
-      "status": "Approved",
-      "rejectionComment": "This is weird",
-      "rejectBy": {
-        "name": "Elij Mahlangu",
-        "role": "Admin",
-        "comment": "This is weird"
-      }
-    },
-    {
-      "id": "24d7",
-      "division": "Cleaning Department",
-      "executiveHead": "",
-      "salaryAdjustmentReason": "Performance",
-      "executiveManager": "Elij Mahlangu",
-      "currentSalary": 1234.33,
-      "recommendedSalary": 3445.53,
-      "approvers": [
-        {
-          "name": "Pinky Dlamini",
-          "role": "Finance Manager",
-          "date": "2024-12-17T13:17:49.636Z",
-          "digitalSignature": true
-        },
-        {
-          "name": null,
-          "role": null,
-          "date": "2024-12-17T13:41:35.609Z",
-          "digitalSignature": true
-        },
-        {
-          "name": "Elij Mahlangu",
-          "role": "Admin",
-          "date": "2024-12-17T15:36:56.480Z",
-          "digitalSignature": true
-        }
-      ],
-      "date": "2024-12-17T13:02:14.446Z",
-      "requesterName": "Issac Masemola",
-      "formType": "Salary Adjustment Requisition",
-      "status": "Approved"
-    },
-    {
-      "id": "ecbb",
-      "division": "Cleaning Department",
-      "resourcesRequired": "Courses Material",
-      "employmentType": "Temporary",
-      "executiveHead": "Mr Seleke",
-      "proposedStartDate": "2024-12-02T22:00:00.000Z",
-      "proposedEndDate": "2024-12-15T22:00:00.000Z",
-      "motivation": "Give motivation",
-      "approvers": [
-        {
-          "name": "Pinky Dlamini",
-          "role": "Finance Manager",
-          "date": "2024-12-17T15:22:30.315Z",
-          "digitalSignature": true
-        },
-        {
-          "name": "Elij Mahlangu",
-          "role": "Admin",
-          "date": "2024-12-17T15:23:30.554Z",
-          "digitalSignature": true
-        }
-      ],
-      "date": "2024-12-17T13:51:35.973Z",
-      "requesterName": "Issac Masemola",
-      "formType": "Employee Requisition",
-      "status": "Approved"
-    },
-    {
-      "id": "959e",
-      "division": "Finance Department",
-      "resourcesRequired": "Courses Material",
-      "employmentType": "Temporary",
-      "executiveHead": "Mr Seleke",
-      "proposedStartDate": "2024-12-09T22:00:00.000Z",
-      "proposedEndDate": "2024-12-10T22:00:00.000Z",
-      "motivation": "This is the motivation",
-      "approvers": [
-        {
-          "name": null,
-          "role": null,
-          "date": "2024-12-17T18:44:13.745Z",
-          "digitalSignature": true
-        },
-        {
-          "name": "Pinky Dlamini",
-          "role": "Finance Manager",
-          "date": "2024-12-18T08:44:44.206Z",
-          "digitalSignature": true
-        }
-      ],
-      "date": "2024-12-17T18:19:52.547Z",
-      "requesterName": "Tumelo Mahlangu",
-      "formType": "Employee Requisition",
-      "status": "Pending"
-    },
-    {
-      "id": "1af6",
-      "division": "Cleaning Department",
-      "executiveHead": "",
-      "salaryAdjustmentReason": "Normal Annual Adjustment",
-      "executiveManager": "Elij Mahlangu",
-      "currentSalary": 2343.44,
-      "recommendedSalary": 3444.33,
-      "approvers": [
-        {
-          "name": "Pinky Dlamini",
-          "role": "Finance Manager",
-          "date": "2024-12-17T18:22:45.629Z",
-          "digitalSignature": true
-        },
-        {
-          "name": null,
-          "role": null,
-          "date": "2024-12-17T18:44:01.240Z",
-          "digitalSignature": true
-        }
-      ],
-      "date": "2024-12-17T18:21:22.911Z",
-      "requesterName": "Issac Masemola",
-      "formType": "Salary Adjustment Requisition",
-      "status": "Pending"
-    },
-    {
-      "id": "3ca1",
-      "division": "HR department",
-      "resourcesRequired": "Courses Material",
-      "employmentType": "Temporary",
-      "executiveHead": "Mr Seleke",
-      "proposedStartDate": "2024-12-02T22:00:00.000Z",
-      "proposedEndDate": "2024-12-10T22:00:00.000Z",
-      "motivation": "I need a course for upskilling in my work.",
-      "approvers": [
-        {
-          "name": "Pinky Dlamini",
-          "role": "Finance Manager",
-          "date": "2024-12-18T08:41:37.422Z",
-          "digitalSignature": true
-        }
-      ],
-      "date": "2024-12-17T18:45:33.083Z",
-      "requesterName": "Tumelo Mahlangu",
-      "formType": "Employee Requisition",
-      "status": "Pending"
     }
   ],
   "dashboardSummary": [

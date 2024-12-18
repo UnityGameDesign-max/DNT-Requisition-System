@@ -39,9 +39,18 @@ json-server --watch db/db.json --port 5000
 ### 1. Solution Approach
 - This project was developed to simulate real-world scenarios of front-end development integrated with a backend service. The following techniques and tools were utilized:
 
-- I have users already in the db json server I added users already to bypass the process of signing up a new user and giving the user roles. I thought this will be easy to test and use the application right away
+- I have users already in the db json server I added users already to bypass the process of signing up a new user and giving the user roles. I thought this will be easy to test and use the application right away.
 
-- Redux State Management: For managing global application state and handling asynchronous API interactions. I utilise local storage with redux to persist state. This helps not losing global state when refreshing the page or application. I know I could have used redux persist but I think I had dependency mismatch which happened to not work properly so decided to use localStorage. In the real world scenerio the localStorage is used for with a token after signing in.
+- I have three distinct roles available within the application:
+  #### 1. Employee
+  #### 2. Finance Manager
+  #### 3. HR 
+  #### 4. Admin (Line Manager or Final Approver)
+
+- The reason I chose these roles is that I was initially unclear about the distinction between the Line Manager and the Approver, specifically regarding who is responsible for making the final decision on approving the requisition. Then I decided to use Admin.
+
+
+- Redux State Management: I use Redux for managing the global application state and handling asynchronous API interactions. To persist state and prevent losing it upon refreshing the page or application, I leverage localStorage alongside Redux. While I considered using Redux Persist, a dependency mismatch caused it to malfunction, leading me to opt for localStorage instead. In real-world scenarios, localStorage is typically used to store tokens after user authentication.
 
 - Mocked API using JSON Server: Used db.json to serve and manage mock data, simulating a backend service. I only have two endpoints one it's for users and another one is for requisitions.
 
