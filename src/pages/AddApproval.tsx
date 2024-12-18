@@ -236,7 +236,7 @@ export function AddApproval() {
                                     </div>
                                 </div>
 
-                                <Separator className="bg-customTheme-muted my-1" />
+                                <Separator className="bg-gray-200 my-1" />
 
                                 <div className="grid grid-cols-4 p-6 gap-4">
                                     {approvalDetails(requisition).map((approval) => (

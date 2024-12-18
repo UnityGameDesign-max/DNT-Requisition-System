@@ -74,7 +74,7 @@ export const Header = ({ name, initials, role }: ProfileDetails) => {
                         </div>
                     </DropdownMenuLabel>
 
-                    <Separator className="text-customTheme-muted my-2"/>
+                    <Separator className="bg-gray-200 my-1" />
 
                     <DropdownMenuItem onClick={signOut} className="cursor-pointer">
                         <LogOut className="w-4 h-4 mr-2 hover:bg-gray-100 text-customTheme-primary" />
