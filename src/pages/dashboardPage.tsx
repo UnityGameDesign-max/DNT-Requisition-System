@@ -1,5 +1,5 @@
 import CardDashboard, { CardContent } from "@/components/common/card-dashboard";
-import DashboardPageWrapper from "@/components/common/dashboardPageWrapper";
+import DashboardPageWrapper from "@/components/common/dashboard-page-wrapper";
 import axios from "axios";
 import { 
     BookOpenCheck, 

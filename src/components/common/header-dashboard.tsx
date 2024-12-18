@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import DashboardPageWrapper from "./dashboardPageWrapper";
+import DashboardPageWrapper from "./dashboard-page-wrapper";
 
 import { 
     DropdownMenu, 

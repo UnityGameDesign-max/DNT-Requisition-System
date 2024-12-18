@@ -1,6 +1,6 @@
 import { ApprovalDetailSection } from "@/components/common/approval-section";
 import { CardContent } from "@/components/common/card-dashboard";
-import DashboardPageWrapper from "@/components/common/dashboardPageWrapper";
+import DashboardPageWrapper from "@/components/common/dashboard-page-wrapper";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";

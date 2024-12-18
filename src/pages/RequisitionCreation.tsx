@@ -1,5 +1,5 @@
 import { CardContent } from "@/components/common/card-dashboard";
-import DashboardPageWrapper from "@/components/common/dashboardPageWrapper";
+import DashboardPageWrapper from "@/components/common/dashboard-page-wrapper";
 import { FormPageTitle } from "@/components/common/form-title";
 import MaxWidthWrapper from "@/components/common/max-width-wrapper";
 import { Button } from "@/components/ui/button";
