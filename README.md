@@ -28,6 +28,12 @@ npm install
 npm run dev
 ```
 
+### 3. Install json server globally if haven't already
+
+```bash
+npm install -g json-server
+```
+
 ### 3. Run the json server that acts as a Backend service
 
 ```bash
