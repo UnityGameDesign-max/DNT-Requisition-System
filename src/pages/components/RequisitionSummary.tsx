@@ -13,6 +13,7 @@ import axios from "axios";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { formatDate, getInitials } from "@/lib/utils";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Profile } from "@/components/common/profile";
 
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -64,7 +65,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
                         </Avatar>
                     </HoverCardTrigger>
                     <HoverCardContent className="bg-white w-30">
-                        {requisition.requesterName}
+                      <Profile name={requisition.requesterName} role={"employee"}/>
                     </HoverCardContent>
                 </HoverCard>
                
@@ -91,13 +92,8 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
                             </Avatar>
                           </HoverCardTrigger>
                           <HoverCardContent className="bg-white w-30 flex gap-3">
-                            <Avatar className="w-8 h-8">
-                              <AvatarFallback className="text-customTheme-primary">{getInitials(req.name)}</AvatarFallback>
-                            </Avatar>
-                           <div>
-                            <p className="font-medium text-black">{req.name}</p>
-                            <p className="text-customTheme-secondary text-sm">{req.role}</p>
-                           </div>
+
+                           <Profile name={req.name} role={req.role}/>
                            
                           </HoverCardContent>
                         </HoverCard>
@@ -106,8 +102,7 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
                     :
                     null
                    }
-                  
-
+  
                 </div>
                 
                 
@@ -147,7 +142,6 @@ import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/h
                     <p className="text-yellow-500 font-medium ml-1">{requisition.status || "Pending"}</p>
                   </div> 
 
-                  {/* {requisition.approvers.length > 0 ? ()} */}
                   {
                     requisition.approvers.length > 0 ?
                     

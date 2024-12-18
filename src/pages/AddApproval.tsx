@@ -48,7 +48,7 @@ interface RequisitionForm {
 export function AddApproval() {
     const [allRequisitionForms, setAllRequisitionForms] = useState<RequisitionForm[]>([]);
     const { name, role } = useSelector((state: any) => state.user);
-    const [open, setOpen] = useState<boolean>(false);
+    const [openDialogId, setOpenDialogId] = useState<string | null>(null); // Track open dialog by requisition ID
     const [requisitionLoad, setRequisitionLoad] = useState<boolean>(true);
 
     const form = useForm<TRejectionRequisitionValidator>({
@@ -99,13 +99,15 @@ export function AddApproval() {
 
         try {
             await axios.patch(`${API_BASE_URL}/allRequisitionForms/${requisitionId}`, updatedRequisition);
-
+            
             setAllRequisitionForms((prevForms: any) =>
                 prevForms.map((form: any) =>
                     form.id === requisitionId ? { ...form, status: 'Rejected', rejectionComment: comment } : form
                 )
             );
-            setOpen(false);
+
+        
+            setOpenDialogId(null);
             toast.success("Rejected requisition successfully");
         } catch (err) {
             console.error("Error rejecting requisition:", err);
@@ -115,32 +117,31 @@ export function AddApproval() {
     const handleApprove = async (requisitionId: string) => {
         const requisition = allRequisitionForms.find((req: any) => req.id === requisitionId);
 
-        if (!requisition) {
-            console.error("Requisition not found");
+    if (!requisition) {
+        console.error("Requisition not found");
+        return;
+    }
+
+    const approver = {
+        name: name,
+        role: role,
+        date: new Date(),
+        digitalSignature: true
+    };
+
+    try {
+        if (requisition.status === "Approved" || requisition.status === "Rejected") {
+            toast.error("This requisition is already finalized.");
             return;
         }
 
-        if (role !== 'Admin') {
-            console.error("Only admin can approve requisitions");
-            return;
-        }
-
-        const approver = {
-            name: name,
-            role: role,
-            date: new Date(),
-            digitalSignature: true
-        };
-
-        try {
+        if (role === 'Admin' && requisition.status === 'Pending') {
             const updatedApprovers = [...requisition.approvers, approver];
             await axios.patch(`${API_BASE_URL}/allRequisitionForms/${requisitionId}`, {
                 id: requisitionId,
                 approvers: updatedApprovers,
-                status: 'Approved' // Only Admin can set the status to 'Approved'
+                status: 'Approved'
             });
-
-            setRequisitionLoad(!requisitionLoad);
 
             setAllRequisitionForms((prevForms: any) =>
                 prevForms.map((form: any) =>
@@ -149,19 +150,37 @@ export function AddApproval() {
                         : form
                 )
             );
-            toast.success("Approved the requisition");
-        } catch (err) {
-            console.error("Error approving requisition:", err);
+            toast.success("Requisition approved");
+        } else {
+            const updatedApprovers = [...requisition.approvers, approver];
+            await axios.patch(`${API_BASE_URL}/allRequisitionForms/${requisitionId}`, {
+                id: requisitionId,
+                approvers: updatedApprovers,
+            });
+
+            setAllRequisitionForms((prevForms: any) =>
+                prevForms.map((form: any) =>
+                    form.id === requisitionId
+                        ? { ...form, approvers: updatedApprovers }
+                        : form
+                )
+            );
+            toast.success("Approver added");
         }
+        setRequisitionLoad(!requisitionLoad);
+    } catch (err) {
+        console.error("Error processing requisition:", err);
+        toast.error("An error occurred while processing the requisition.");
+    }
     };
 
     return (
         <DashboardPageWrapper>
             {
-                allRequisitionForms.length > 0 ?
+                allRequisitionForms.length > 0 ? 
                     allRequisitionForms.map((requisition: any) => {
                         const isApproved = requisition.approvers.some((approver: { name: string }) => approver.name === name) || requisition.status === "Approved" && role === 'Admin';
-                        const isRejected = requisition.status === "Rejected";
+                        const isRejected = requisition.rejectBy?.name === name || requisition.status === "Rejected";
 
                         return (
                             <CardContent className="my-4" key={requisition.id}>
@@ -180,13 +199,15 @@ export function AddApproval() {
                                             {isApproved ? 'Approved' : 'Approve'}
                                         </Button>
 
-                                        <Dialog open={open} onOpenChange={setOpen}>
+                                        <Dialog open={openDialogId === requisition.id} onOpenChange={() => setOpenDialogId(openDialogId === requisition.id ? null : requisition.id)}>
                                             <DialogTrigger asChild>
                                                 <Button
                                                     disabled={isRejected || requisition.status === "Approved"}
                                                     variant='outline'>
                                                     <CircleX className="text-red-400" />
-                                                    Reject
+                                                    {requisition.status === "Approved" ? "Reject" : ""}
+                                                    {requisition.status === "Rejected" && "Rejected" }
+                                                    {requisition.status !== "Approved" && requisition.status !== "Rejected" && "Reject"}
                                                 </Button>
                                             </DialogTrigger>
                                             <DialogContent className="bg-white">
